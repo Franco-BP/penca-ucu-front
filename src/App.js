@@ -1,24 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
+import TopBar from './Componentes/TopBar';
+import MatchCard from './Componentes/MatchCard';
+import { ProviderPencaUCUContext } from './context/context.js';
+import Contenido from './Componentes/Contenido.js';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ProviderPencaUCUContext>
+      <div className="App">
+        <TopBar />  
+        <MatchCard />
+        <Contenido />
+      </div>
+    </ProviderPencaUCUContext>
   );
 }
 
