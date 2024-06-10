@@ -12,7 +12,7 @@ import ImagenAvatar from '../assets/78000335.png'
 
 const CustomAppBar = styled(AppBar)({
   marginTop: '40px',
-  backgroundColor: '#1E3D75',
+  backgroundColor: '#1C285E',
 });
 
 const LogoButton = styled(IconButton)({

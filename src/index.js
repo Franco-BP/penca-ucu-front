@@ -2,15 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import TopBar from './Componentes/TopBar';
-import MatchCard from './Componentes/MatchCard';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <TopBar />  
-    <MatchCard />
+    <App />
   </React.StrictMode>
 );
 
