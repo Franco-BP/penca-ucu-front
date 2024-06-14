@@ -53,7 +53,7 @@ const TopBar = () => {
   return (
     <CustomAppBar position="static" className="CustomAppBar">
       <Toolbar>
-        <LogoButton component="a" href="/">
+          <LogoButton component="a" href="/">
           <LogoImage src={LogoPenca} alt="logo" />
         </LogoButton>
         <TitleContainer>
