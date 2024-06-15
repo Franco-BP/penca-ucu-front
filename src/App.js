@@ -5,6 +5,7 @@ import MatchCard from './Componentes/MatchCard';
 import { ProviderPencaUCUContext } from './Context/context.js';
 import Contenido from './Componentes/Contenido.js';
 import RankingTable from './Componentes/UserRanking.js';
+import PredictionCard from './Componentes/PredictionCard/PredictionCard.js';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <MatchCard />
         <Contenido />
         <RankingTable />
+        <PredictionCard />
       </div>
     </ProviderPencaUCUContext>
   );
