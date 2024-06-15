@@ -1,48 +1,44 @@
 import * as React from 'react';
-import { CardActionArea, useMediaQuery, CardMedia, Card, Box, CardContent, Typography, Button } from '@mui/material';
-import { useState } from 'react';
-import { useTheme } from '@mui/material/styles';
+import { CardActionArea, CardMedia, Card, Box, Typography, Button } from '@mui/material';
 import "../services/PencaUCUservices.js";
 import formatDate from '../utils/formatDate.js';
 
 const MatchCard = ({match, userPrediction}) => {
 
-  const [ isHovered, setIsHovered ] = useState( false );
-    
-  const theme = useTheme();
-  const mobileMatch = useMediaQuery(theme.breakpoints.down('701'));
+  // Hardcoding variables
+  const hardcodedMatch = {
+    idPartido: 1,
+    equipo1: {
+      imgBandera: `brasil.png`,
+      nombre: 'brasil'
+    },
+    equipo2: {
+      imgBandera: 'argentina.png',
+      nombre: 'argentina'
+    },
+    fecha: '2024-06-12T03:00:00.000+00:00'
+  };
+  const hardcodedPrediction = {resultadoEquipo1: 1, resultadoEquipo2: 4, idPartido: 1}
 
-  // const match1 = match.equipo1;
-  // const match2 = match.equipo2;
-  const brasil =  require(`../assets/banderas/brasil.png`);
-  const argentina = require(`../assets/banderas/argentina.png`);
-  const team1 = {imgBandera: '../assets/banderas/brasil.png', nombre: 'Brasil'};
-  const team2 = {imgBandera: '../assets/banderas/argentina.png', nombre: 'Argentina'};
-  const matchDate = "2024-06-12T03:00:00.000+00:00"
+  const flagTeam1 =  require(`../assets/banderas/${hardcodedMatch.equipo1.imgBandera}`);
+  const flagTeam2 = require(`../assets/banderas/${hardcodedMatch.equipo2.imgBandera}`);
+  const team1 = {imgBandera: flagTeam1, nombre: 'Brasil'};
+  const team2 = {imgBandera: flagTeam2, nombre: 'Argentina'};
+  const matchDate = hardcodedMatch.fecha;
   const hasPrediction = userPrediction != null;
-  
-  function handleMouseOver() {
-      setIsHovered( true );
-  }
-
-  function handleMouseOut() {
-      setIsHovered( false );
-  }
 
   return (
     <Card sx={{
       displat: 'flex', flexDirection: 'column', width: '25rem', height: '10rem',
       justifyContent: 'space-between'}}>
       <CardActionArea sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', paddingY: '0.5rem'}}
-        onMouseOver={ handleMouseOver }
-        onMouseOut={ handleMouseOut }
         // onClick={() => window.open(match.link, "_blank")}
       >
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <CardMedia
             sx={{width: '5rem', height: '5rem'}}
             component="img"
-            src={brasil} /* IMAGEN DEL EQUIPO */
+            src={team1.imgBandera} /* IMAGEN DEL EQUIPO */
             alt={team1.nombre}
           />
           <Typography sx={{marginY: '0.5rem'}}>
@@ -50,15 +46,30 @@ const MatchCard = ({match, userPrediction}) => {
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+          { hasPrediction && hardcodedMatch.idPartido === hardcodedPrediction.idPartido ?
+          <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Box sx={{ borderRadius:'2px', backgroundColor:'#EFEFEF', padding: '0.5rem', marginRight: '0.5rem'}}>
+              <Typography sx={{color: 'black'}}>
+                {hardcodedPrediction.resultadoEquipo1}
+              </Typography>
+            </Box>
+            <Box sx={{ borderRadius:'2px', backgroundColor:'#EFEFEF', padding: '0.5rem', marginLeft: '0.5rem'}}>
+              <Typography sx={{color: 'black'}}>
+                {hardcodedPrediction.resultadoEquipo2}
+              </Typography>
+            </Box>
+          </Box>
+          :
           <Button sx={{}}>
-            Boton
+            Ingresar
           </Button>
+          }
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <CardMedia
             sx={{width: '5rem', height: '5rem'}}
             component="img"
-            src={argentina} /* IMAGEN DEL EQUIPO */
+            src={team2.imgBandera} /* IMAGEN DEL EQUIPO */
             alt={team2.nombre}
           />
           <Typography sx={{marginY: '0.5rem'}}>
