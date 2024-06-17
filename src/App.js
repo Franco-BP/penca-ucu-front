@@ -1,21 +1,23 @@
-import logo from './logo.svg';
+
 import './App.css';
-import TopBar from './Componentes/TopBar';
-import MatchCard from './Componentes/MatchCard';
-import { ProviderPencaUCUContext } from './Context/context.js';
-import Contenido from './Componentes/Contenido.js';
-import RankingTable from './Componentes/UserRanking.js';
+import { ProviderPencaUCUContext } from './context/context.js';
+import Layout from './Componentes/Layout.js';
+import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
+import Layout2 from './Componentes/Layout2.js';
+
 
 function App() {
   return (
-    <ProviderPencaUCUContext>
-      <div className="App">
-        <TopBar />
-        <MatchCard />
-        <Contenido />
-        <RankingTable />
-      </div>
-    </ProviderPencaUCUContext>
+    <BrowserRouter>
+      <ProviderPencaUCUContext>
+      <Routes>
+          <Route path='Layout' element={<Layout />} />
+          <Route path= 'Layout2' element={<Layout2/>}/>
+       </Routes>
+      
+      </ProviderPencaUCUContext>
+   
+    </BrowserRouter >
   );
 }
 
