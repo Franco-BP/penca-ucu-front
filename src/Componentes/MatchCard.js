@@ -18,6 +18,7 @@ const MatchCard = ({match, userPrediction}) => {
     },
     fecha: '2024-06-12T03:00:00.000+00:00'
   };
+  
   const hardcodedPrediction = {resultadoEquipo1: 1, resultadoEquipo2: 4, idPartido: 1}
 
   const flagTeam1 =  require(`../assets/banderas/${hardcodedMatch.equipo1.imgBandera}`);
