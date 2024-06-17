@@ -33,8 +33,8 @@ const theme = createTheme({
 
 const columns = [
     { field: 'pos', headerName: 'POS', width: 70, headerAlign: 'center', align: 'center' },
-    { field: 'name', headerName: 'Name', width: 180, headerAlign: 'center', align: 'left' },
-    { field: 'lastname', headerName: 'LastName', width: 180, headerAlign: 'center', align: 'left' },
+    { field: 'name', headerName: 'Name', width: 180, headerAlign: 'center', align: 'center' },
+    { field: 'lastname', headerName: 'LastName', width: 180, headerAlign: 'center', align: 'center' },
     { field: 'pts', headerName: 'PTS', type: 'number', width: 90, headerAlign: 'center', align: 'center' },
 ];
 

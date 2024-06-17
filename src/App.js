@@ -13,7 +13,6 @@ function App() {
       <div className="App">
         <TopBar />
         <MatchCard />
-        <Contenido />
         <RankingTable />
         <PredictionCard />
       </div>

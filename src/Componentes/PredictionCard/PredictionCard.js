@@ -1,51 +1,96 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import { Box, TextField } from '@mui/material';
-import PredictionInput from './PredictionInput.js';
-import copaAmericaLogo from '../../assets/copaAmerica.png';
-import argentina from '../../assets/argentina.png';
-import brasil from '../../assets/brasil.png';
 import { postWithResponseManage } from "../../services/PencaUCUservices.js";
+import { PencaUCUContext, accionPostPrediccionData } from '../../Context/context.js';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
+import copaAmericaLogo from '../../assets/copaAmerica.png';
+import { styled } from '@mui/system';
+import canada from '../../assets/Banderas/canada.png';
+import MatchCard from '../MatchCard.js';
 
-export default function MatchCard() {
+export default function PredictionCard({ match }) {
+
+    const { state } = useContext(PencaUCUContext);
+    const { partidoData } = state;
+
+    const [prediccionE1, setPrediccionE1] = useState(0);
+    const [prediccionE2, setPrediccionE2] = useState(0);
+
+    const handleIncrement = (which) => {
+        if (which === 'teamOne' && prediccionE1 < 99) setPrediccionE1(prev => prev + 1);
+        else if (which === 'teamTwo' && prediccionE2 < 99) setPrediccionE2(prev => prev + 1);
+    };
+
+    const handleDecrement = (which) => {
+        if (which === 'teamOne' && prediccionE1 > 0) setPrediccionE1(prev => prev - 1);
+        else if (which === 'teamTwo' && prediccionE2 > 0) setPrediccionE2(prev => prev - 1);
+    };
+
+    const handleInputChange = (event, which) => {
+        const value = Math.max(0, Math.min(99, Number(event.target.value)));
+        if (which === 'teamOne') setPrediccionE1(value);
+        else setPrediccionE2(value);
+    };
+
+
     const handleSave = () => {
-        // Datos a enviar
         const predictionData = {
-            userId: 1, // Suponiendo que tengas un ID de usuario
-            matchId: 123, // ID del partido
-            predictedScore: score
+            prediccion_equipo1: prediccionE1,
+            prediccion_equipo2: prediccionE2,
+            ganador: { id_equipo: prediccionE1 > prediccionE2 ? 1 : 2 },
+            partido: { id_partido: 2 },
+            id_usuario: 1
         };
 
-        axios.post('https://yourapi.com/predictions', predictionData)
-            .then(response => {
-                console.log('Guardado exitosamente:', response.data);
-                // Implementa aquí cualquier acción después de guardar con éxito
-            })
-            .catch(error => {
-                console.error('Error al guardar la predicción:', error);
-                // Implementa aquí el manejo de errores
+        postWithResponseManage('/prediccion/create', predictionData)
+            .then((response) => {
+                dispatch(accionPostPrediccionData(response));
             });
     };
 
     return (
         <Card sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <img src={argentina} alt="Argentina" style={{ width: 50, height: 30, marginRight: 2 }} />
-                <Typography variant="h6" color="text.primary">Argentina</Typography>
+                <img src={MatchCard.HardcodedMatch.equipo1.imgBandera} alt={MatchCard.HardcodedMatch.equipo1.nombre} style={{ width: 60, height: 60, marginRight: 2 }} />
+                <Typography variant="h6" color="text.primary">{partidoData.teamOne?.name}</Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <PredictionInput />
-                <img src={copaAmericaLogo} alt="CopaAmerica" style={{ width: 150, height: 130, marginLeft: 2 }} />
-                <PredictionInput />
-
+                <Button onClick={() => handleDecrement('teamOne')}>
+                    <RemoveIcon />
+                </Button>
+                <TextField
+                    type="number"
+                    value={prediccionE1}
+                    onChange={(e) => handleInputChange(e, 'teamOne')}
+                    inputProps={{ min: 0, max: 99, style: { textAlign: 'center' } }}
+                />
+                <Button onClick={() => handleIncrement('teamOne')}>
+                    <AddIcon />
+                </Button>
+            </Box>
+            <img src={copaAmericaLogo} alt="Copa America" style={{ width: 80, height: 80 }} />
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Button onClick={() => handleDecrement('teamTwo')}>
+                    <RemoveIcon />
+                </Button>
+                <TextField
+                    type="number"
+                    value={prediccionE2}
+                    onChange={(e) => handleInputChange(e, 'teamTwo')}
+                    inputProps={{ min: 0, max: 99, style: { textAlign: 'center' } }}
+                />
+                <Button onClick={() => handleIncrement('teamTwo')}>
+                    <AddIcon />
+                </Button>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant="h6" color="text.primary">Brasil</Typography>
-                <img src={brasil} alt="Brasil" style={{ width: 50, height: 30, marginLeft: 2 }} />
+                <Typography variant="h6" color="text.primary">{MatchCard.HardcodedMatch.equipo2.nombre}</Typography>
+                <img src={MatchCard.HardcodedMatch.equipo2.imgBandera} alt={MatchCard.HardcodedMatch.equipo2.nombre} style={{ width: 60, height: 60, marginLeft: 2 }} />
             </Box>
             <Button onClick={handleSave} variant="contained" color="primary">
                 Guardar

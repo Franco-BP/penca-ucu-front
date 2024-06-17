@@ -3,6 +3,7 @@ import { Unstable_NumberInput as BaseNumberInput } from '@mui/base/Unstable_Numb
 import { styled } from '@mui/system';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import copaAmericaLogo from '../../assets/copaAmerica.png';
 
 const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   return (
@@ -28,9 +29,28 @@ const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   );
 });
 
-export default function PredictionInput() {
-  return <NumberInput aria-label="Input team One" min={0} max={99} />;
-  <NumberInput aria-label="Input team Two" min={0} max={99} />;
+export default function PredictionInput({ setPrediccion }) {
+
+  const [prediccionE1, setPrediccionE1] = React.useState();
+  const [prediccionE2, setPrediccionE2] = React.useState();
+
+  const handlePredictionChange = (event) => {
+    const value = event.target.value === '' ? '' : Number(event.target.value);
+    if (event.target.ariaLabel === 'Input team One') {
+      setPrediccionE1(value);
+    } else {
+      setPrediccionE2(value);
+    }
+  };
+
+
+  return (
+    <>
+      <NumberInput aria-label="Input team One" min={0} max={99} value={setPrediccion} onChange={handlePredictionChange} />
+
+    </>
+
+  );
 }
 
 const blue = {
