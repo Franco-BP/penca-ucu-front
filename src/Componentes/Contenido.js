@@ -1,5 +1,5 @@
 import { getWithResponseManage } from "../services/PencaUCUservices.js";
-import { PencaUCUContext, accionGetTorneoData } from '../context/context.js';
+import { PencaUCUContext, accionGetTorneoData } from '../Context/context.js';
 import React, { useEffect, useState, useContext } from 'react';
 
 const Contenido = () => {
