@@ -14,7 +14,6 @@ function App() {
           <Route path='Layout' element={<Layout />} />
           <Route path= 'Layout2' element={<Layout2/>}/>
        </Routes>
-      
       </ProviderPencaUCUContext>
    
     </BrowserRouter >
