@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -11,6 +11,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import LogoPenca from '../assets/PencaUCU.png';
 import ImagenAvatar from '../assets/78000335.png';
 import { Button } from '@mui/material';
+import { PencaUCUContext } from '../context/context';
 
 
 const CustomAppBar = styled(AppBar)({
@@ -43,6 +44,7 @@ const CustomAvatar = styled(Avatar)({
 });
 
 const TopBar = () => {
+
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElHamburger, setAnchorElHamburger] = useState(null);
 
@@ -61,6 +63,10 @@ const TopBar = () => {
   const handleCloseHamburgerMenu = () => {
     setAnchorElHamburger(null);
   };
+
+  const { data, dispatch } = useContext(PencaUCUContext);
+  const usuario = data.usuarioData;
+
 
   const navItems = ['Resultados', 'Reglas de juego'];
 

@@ -5,6 +5,14 @@ export const PencaUCUContext = createContext();
 export const initialState = {
   torneoData: null,
   userData: null,
+  carreraData: null,
+};
+
+export const accionGetCarreraData = (carrera) => {
+  return {
+    type: 'GET_CARRERA_DATA',
+    payload: carrera,
+  };
 };
 
 export const accionAddUser = (user) => {
@@ -28,6 +36,8 @@ const reducer = (state, action) => {
       return { ...state, torneoData: action.payload };
     case 'ADD_USER':
       return { ...state, userData: action.payload };
+    case 'GET_CARRERA_DATA':
+      return { ...state, carreraData: action.payload };
     default:
       return state;
   }
