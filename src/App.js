@@ -4,6 +4,8 @@ import { ProviderPencaUCUContext } from './context/context.js';
 import Layout from './Componentes/Layout.js';
 import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 import Layout2 from './Componentes/Layout2.js';
+import RulesScreen from './Componentes/screens/RulesScreen.js';
+import HomeScreen from './Componentes/screens/HomeScreen.js';
 
 
 function App() {
@@ -11,8 +13,8 @@ function App() {
     <BrowserRouter>
       <ProviderPencaUCUContext>
       <Routes>
-          <Route path='Layout' element={<Layout />} />
-          <Route path= 'Layout2' element={<Layout2/>}/>
+          <Route path='Layout' element={<RulesScreen />} />
+          <Route path= 'Layout2' element={<HomeScreen/>}/>
        </Routes>
       </ProviderPencaUCUContext>
    
