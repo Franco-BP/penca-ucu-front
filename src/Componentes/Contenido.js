@@ -9,7 +9,7 @@ const Contenido = () => {
     const torneo = data.torneoData;
 
     useEffect(() => {
-        console.log("hola");
+        
         getWithResponseManage('/torneo/getAll')
             .then((response) => {
                 dispatch(accionGetTorneoData(response));
