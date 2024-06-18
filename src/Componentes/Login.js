@@ -30,7 +30,7 @@ export default function FormPropsTextFields() {
         .then((response) => {
             dispatch(accionAddUser(response))
             if (response.idUsuario) {
-                navigate('/layout');
+                navigate('/home');
             }
         })
   };

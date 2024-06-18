@@ -72,7 +72,7 @@ export default function FormPropsTextFields() {
             dispatch(accionAddUser(response))
             if (response.idUsuario) {
                 console.log(response)
-                navigate('/layout');
+                navigate('/home');
             }
         })
   };
