@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import MatchCarousel from './Componentes/MatchCarousel';
+import Layout from './Componentes/Layout';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
