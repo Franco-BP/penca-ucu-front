@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import MatchCard from './MatchCard';
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { PencaUCUContext, accionGetPartidoData, accionSetSelectedPartido } from '../context/context';
 import { getWithResponseManage } from '../services/PencaUCUservices';
 
@@ -38,7 +38,7 @@ const MatchCarousel = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Carousel>
+      <Carousel navButtonsAlwaysVisible indicators={false}>
         {groupedMatches.map((group, index) => (
           <Box key={index} sx={{ display: 'flex', justifyContent: 'space-around' }}>
             {group.map((partido) => (

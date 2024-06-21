@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
+import * as React from 'react';
+import { getWithResponseManage } from "../services/PencaUCUservices.js";
+import { useContext, useEffect, useState } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { PencaUCUContext, accionGetPrediccionData } from '../context/context';
-import { getWithResponseManage } from "../services/PencaUCUservices";
 
 const theme = createTheme({
     components: {
@@ -12,8 +13,8 @@ const theme = createTheme({
                     border: 'none',
                 },
                 columnHeader: {
-                    backgroundColor: '#1E3D75',
-                    color: 'white',
+                    backgroundColor: '#1C285E',
+                    color: 'white'
                 },
                 row: {
                     backgroundColor: '#f7f7f7',
@@ -34,6 +35,7 @@ const columns = [
     { field: 'name', headerName: 'Name', width: 180, headerAlign: 'center', align: 'center' },
     { field: 'lastname', headerName: 'LastName', width: 180, headerAlign: 'center', align: 'center' },
     { field: 'pts', headerName: 'PTS', type: 'number', width: 90, headerAlign: 'center', align: 'center' },
+    { field: 'carrera', headerName: 'Carrera', width: 300, headerAlign: 'center', align: 'center' }
 ];
 
 const UserRanking = () => {
@@ -53,7 +55,8 @@ const UserRanking = () => {
                     id: user.idUsuario,
                     name: user.nombre,
                     lastname: user.apellido,
-                    pts: predictionData.filter(pred => pred.idUsuario === user.idUsuario).reduce((acc, pred) => acc + pred.puntos, 0) || 0 //sumar los puntos de todas las predicciones
+                    pts: predictionData.filter(pred => pred.idUsuario === user.idUsuario).reduce((acc, pred) => acc + pred.puntos, 0) || 0, //sumar los puntos de todas las predicciones
+                    carrera: user.carrera.nombre
                 }));
 
                 rankingData.sort((a, b) => b.pts - a.pts).forEach((user, index) => user.pos = index + 1); //ordenar por puntos y asignarle la pos
@@ -70,7 +73,7 @@ const UserRanking = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <div style={{ height: 400, width: '100%' }}>
+            <div style={{ height: 370, width: '50.5rem' }}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
@@ -81,8 +84,7 @@ const UserRanking = () => {
                     getRowId={(row) => row.id}
                     sx={{
                         boxShadow: 2,
-                        border: 2,
-                        borderColor: 'primary.light',
+                        border: 'none',
                         '& .MuiDataGrid-toolbarContainer': {
                             borderBottom: '1px solid #ccc',
                         },
