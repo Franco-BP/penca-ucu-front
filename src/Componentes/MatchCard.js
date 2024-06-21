@@ -30,9 +30,9 @@ const MatchCard = ({match, userPrediction}) => {
 
   return (
     <Card sx={{
-      displat: 'flex', flexDirection: 'column', width: '25rem', height: '10rem',
-      justifyContent: 'space-between'}}>
-      <CardActionArea sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', paddingY: '0.5rem'}}
+      display: 'flex', flexDirection: 'column', width: '25rem', height: '10rem',
+      justifyContent: 'space-between', border: '2px solid ',borderColor:'#1C285E', borderRadius:'2rem'}}>
+      <CardActionArea sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', paddingY: '0.5rem', borderBottomRightRadius: 0, borderBottomLeftRadius: 0}}
         // onClick={() => window.open(match.link, "_blank")}
       >
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>

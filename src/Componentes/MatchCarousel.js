@@ -1,7 +1,7 @@
 import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import MatchCard from './MatchCard'; 
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 
 const MatchCarousel = () => {
   const matchData = [
@@ -23,29 +23,26 @@ const MatchCarousel = () => {
       team2: { flag: 'portugal.png', name: 'Portugal' },
       date: '2024-06-18T03:00:00.000+00:00',
     },
-
   ];
-
-  const groupMatches = (matches, groupSize) => {
-    const matchGroups = [];
-    for (let i = 0; i < matches.length; i += groupSize) {
-      matchGroups.push(matches.slice(i, i + groupSize));
-    }
-    return matchGroups;
-  };
-
-  const groupedMatches = groupMatches(matchData, 3);
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Carousel>
-        {groupedMatches.map((group, index) => (
-          <Box key={index} sx={{ display: 'flex', justifyContent: 'space-around' }}>
-            {group.map((match) => (
-              <MatchCard key={match.id} match={match} />
-            ))}
-          </Box>
-        ))}
+      <Carousel navButtonsAlwaysVisible indicators={false}>
+        <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+          {matchData.map((match) => (
+            <Grid 
+              item 
+              xs={12} 
+              sm={6} 
+              md={4} 
+              lg={4} 
+              key={match.id} 
+              sx={{ display: 'flex', justifyContent: 'center' }}
+            >
+              <MatchCard match={match} />
+            </Grid>
+          ))}
+        </Grid>
       </Carousel>
     </Box>
   );

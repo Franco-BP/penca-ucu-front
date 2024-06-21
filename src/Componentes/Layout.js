@@ -9,7 +9,7 @@ function Layout({children}) {
                 <TopBar />
             </Box>
             {children}
-            <Box>
+            <Box sx={{marginTop:'2rem'}}>
                 <Footer />
             </Box>
         </Box>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { getWithResponseManage } from "../services/PencaUCUservices.js";
 import { useContext, useEffect } from 'react';
-import { PencaUCUContext, accionGetTorneoData } from '../Context/context.js';
+import { PencaUCUContext, accionGetTorneoData } from '../context/context.js';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -14,7 +14,7 @@ const theme = createTheme({
                     border: 'none',
                 },
                 columnHeader: {
-                    backgroundColor: '#1E3D75',
+                    backgroundColor: '#1C285E',
                     color: 'white'
                 },
                 row: {
@@ -66,7 +66,7 @@ const UserRanking = () => {
     }, []);
     return (
         <ThemeProvider theme={theme}>
-            <div style={{ height: 400, width: '100%' }}>
+            <div style={{ height: 370, width: '32.5rem' }}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
@@ -76,8 +76,7 @@ const UserRanking = () => {
                     components={{ Toolbar: GridToolbar }}
                     sx={{
                         boxShadow: 2,
-                        border: 2,
-                        borderColor: 'primary.light',
+                        border: 'none',
                         '& .MuiDataGrid-toolbarContainer': {
                             borderBottom: '1px solid #ccc',
                         },
