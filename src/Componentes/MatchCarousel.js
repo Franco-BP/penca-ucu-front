@@ -1,48 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Carousel from 'react-material-ui-carousel';
-import MatchCard from './MatchCard'; 
+import MatchCard from './MatchCard';
 import { Box, Grid } from '@mui/material';
+import { PencaUCUContext, accionGetPartidoData, accionSetSelectedPartido } from '../context/context';
+import { getWithResponseManage } from '../services/PencaUCUservices';
 
 const MatchCarousel = () => {
-  const matchData = [
-    {
-      id: 1,
-      team1: { flag: 'brasil.png', name: 'Brasil' },
-      team2: { flag: 'argentina.png', name: 'Argentina' },
-      date: '2024-06-12T03:00:00.000+00:00',
-    },
-    {
-      id: 2,
-      team1: { flag: 'alemania.png', name: 'Alemania' },
-      team2: { flag: 'francia.png', name: 'Francia' },
-      date: '2024-06-15T03:00:00.000+00:00',
-    },
-    {
-      id: 3,
-      team1: { flag: 'españa.png', name: 'España' },
-      team2: { flag: 'portugal.png', name: 'Portugal' },
-      date: '2024-06-18T03:00:00.000+00:00',
-    },
-  ];
+  const { data, dispatch } = useContext(PencaUCUContext);
+  const [groupedMatches, setGroupedMatches] = useState([]);
+
+  useEffect(() => {
+    getWithResponseManage('/partido/getAll')
+      .then((response) => {
+        dispatch(accionGetPartidoData(response));
+      })
+      .catch(error => console.log(error));
+  }, [dispatch]);
+
+  const handleSelectPartido = (partido) => {
+    dispatch(accionSetSelectedPartido(partido));
+  };
+
+
+  useEffect(() => {
+    if (data.partidoData) {
+      const groupMatches = (matches, groupSize) => {
+        const matchGroups = [];
+        for (let i = 0; i < matches.length; i += groupSize) {
+          matchGroups.push(matches.slice(i, i + groupSize));
+        }
+        return matchGroups;
+      };
+
+      setGroupedMatches(groupMatches(data.partidoData, 3));
+    }
+  }, [data.partidoData]);
 
   return (
     <Box sx={{ width: '100%' }}>
       <Carousel navButtonsAlwaysVisible indicators={false}>
-        <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
-          {matchData.map((match) => (
-            <Grid 
-              item 
-              xs={12} 
-              sm={6} 
-              md={4} 
-              lg={4} 
-              key={match.id} 
-              sx={{ display: 'flex', justifyContent: 'center' }}
-            >
-              <MatchCard match={match} />
-            </Grid>
-          ))}
-        </Grid>
+        {groupedMatches.map((group, index) => (
+          <Box key={index} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            {group.map((partido) => (
+              <div onClick={() => handleSelectPartido(partido)} key={partido.idPartido}>
+                <MatchCard partido={partido} />
+              </div>
+            ))}
+          </Box>
+        ))}
       </Carousel>
     </Box>
   );
