@@ -14,7 +14,6 @@ const MatchCarousel = () => {
     getWithResponseManage('/partido/getAll')
       .then((response) => {
         dispatch(accionGetPartidoData(response));
-        console.log(response);
       })
       .catch(error => console.log(error));
   }, [dispatch]);

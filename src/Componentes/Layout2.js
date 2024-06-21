@@ -5,6 +5,7 @@ import Contenido from "./Contenido"
 import Login from "./Login";
 import Register from "./Register";
 import MatchCarousel from "./MatchCarousel";
+import PredictionCard from "./PredictionCard/PredictionCard";
 
 
 function Layout2() {
@@ -15,6 +16,9 @@ function Layout2() {
             </Box>
             <Box sx={{ flex: 1, marginTop: '1.5rem' }}>
                 <Register />
+            </Box>
+            <Box>
+                <PredictionCard />
             </Box>
             <Box>
                 <MatchCarousel />

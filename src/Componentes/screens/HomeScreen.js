@@ -3,6 +3,8 @@ import Layout from '../Layout'
 import { Box, Grid, Typography } from '@mui/material'
 import Contenido from '../Contenido'
 import MatchCarousel from '../MatchCarousel'
+import PredictionCard from '../PredictionCard/PredictionCard'
+import UserRanking from '../UserRanking'
 
 const HomeScreen = () => {
   return (
@@ -17,6 +19,12 @@ const HomeScreen = () => {
       </Box>
       <Box>
         <MatchCarousel />
+      </Box>
+      <Box>
+        <PredictionCard />
+      </Box>
+      <Box>
+        <UserRanking />
       </Box>
     </Layout>
   )

@@ -9,15 +9,9 @@ const MatchCard = ({ partido }) => {
   // Asegúrate de que ambos equipos están definidos
   const team1 = partido.equipos[0].equipo;
   const team2 = partido.equipos[1].equipo;
-  console.log(team1.imgBandera, team2.imgBandera);
 
   const team1Flag = require(`../assets/Banderas/${team1.imgBandera}`);
   const team2Flag = require(`../assets/Banderas/${team2.imgBandera}`);
-  // Verifica que los equipos tienen los datos necesarios antes de renderizar
-  if (!team1 || !team2) return null;
-
-  console.log(team1Flag);
-  console.log(team2Flag);
 
   return (
     <Card sx={{

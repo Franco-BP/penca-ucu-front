@@ -5,18 +5,17 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Box, TextField } from '@mui/material';
 import { postWithResponseManage } from "../../services/PencaUCUservices.js";
-import { PencaUCUContext, accionPostPrediccionData } from '../../Context/context.js';
+import { PencaUCUContext } from '../../context/context.js';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import copaAmericaLogo from '../../assets/copaAmerica.png';
 import { styled } from '@mui/system';
-import canada from '../../assets/Banderas/canada.png';
 import MatchCard from '../MatchCard.js';
 
 export default function PredictionCard({ match }) {
 
     const { state } = useContext(PencaUCUContext);
-    const { partidoData } = state;
+    //const { partidoData } = state;
 
     const [prediccionE1, setPrediccionE1] = useState(0);
     const [prediccionE2, setPrediccionE2] = useState(0);
@@ -47,17 +46,17 @@ export default function PredictionCard({ match }) {
             id_usuario: 1
         };
 
-        postWithResponseManage('/prediccion/create', predictionData)
+        /* postWithResponseManage('/prediccion/create', predictionData)
             .then((response) => {
                 dispatch(accionPostPrediccionData(response));
-            });
+            }); */
     };
 
     return (
         <Card sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <img src={MatchCard.HardcodedMatch.equipo1.imgBandera} alt={MatchCard.HardcodedMatch.equipo1.nombre} style={{ width: 60, height: 60, marginRight: 2 }} />
-                <Typography variant="h6" color="text.primary">{partidoData.teamOne?.name}</Typography>
+                <img src="" alt="" style={{ width: 60, height: 60, marginRight: 2 }} />
+                <Typography variant="h6" color="text.primary">Jeje</Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Button onClick={() => handleDecrement('teamOne')}>
@@ -89,8 +88,8 @@ export default function PredictionCard({ match }) {
                 </Button>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant="h6" color="text.primary">{MatchCard.HardcodedMatch.equipo2.nombre}</Typography>
-                <img src={MatchCard.HardcodedMatch.equipo2.imgBandera} alt={MatchCard.HardcodedMatch.equipo2.nombre} style={{ width: 60, height: 60, marginLeft: 2 }} />
+                <Typography variant="h6" color="text.primary">Jeje</Typography>
+                <img src="" alt="" style={{ width: 60, height: 60, marginLeft: 2 }} />
             </Box>
             <Button onClick={handleSave} variant="contained" color="primary">
                 Guardar
