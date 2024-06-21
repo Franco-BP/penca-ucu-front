@@ -3,11 +3,21 @@ import { Card, CardActionArea, CardMedia, Box, Typography } from '@mui/material'
 import formatDate from '../utils/formatDate';
 
 const MatchCard = ({ partido }) => {
-  if (!partido) return null; // Maneja casos donde no hay datos
+  // Primero verifica si partido y partido.equipos existen
+  if (!partido || !partido.equipos || partido.equipos.length < 2) return null;
 
-  // Asigna datos de los equipos para fácil acceso
+  // Asegúrate de que ambos equipos están definidos
   const team1 = partido.equipos[0].equipo;
   const team2 = partido.equipos[1].equipo;
+  console.log(team1.imgBandera, team2.imgBandera);
+
+  const team1Flag = require(`../assets/Banderas/${team1.imgBandera}`);
+  const team2Flag = require(`../assets/Banderas/${team2.imgBandera}`);
+  // Verifica que los equipos tienen los datos necesarios antes de renderizar
+  if (!team1 || !team2) return null;
+
+  console.log(team1Flag);
+  console.log(team2Flag);
 
   return (
     <Card sx={{
@@ -19,7 +29,7 @@ const MatchCard = ({ partido }) => {
           <CardMedia
             sx={{ width: '5rem', height: '5rem' }}
             component="img"
-            src={require(`../assets/Banderas/${team1.imgBandera}`)}
+            src={team1Flag}
             alt={team1.nombre}
           />
           <Typography sx={{ marginY: '0.5rem' }}>{team1.nombre}</Typography>
@@ -28,7 +38,7 @@ const MatchCard = ({ partido }) => {
           <CardMedia
             sx={{ width: '5rem', height: '5rem' }}
             component="img"
-            src={require(`../assets/Banderas/${team2.imgBandera}`)}
+            src={team2Flag}
             alt={team2.nombre}
           />
           <Typography sx={{ marginY: '0.5rem' }}>{team2.nombre}</Typography>

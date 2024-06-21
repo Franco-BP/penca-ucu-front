@@ -7,6 +7,7 @@ export const initialState = {
   userData: null,
   carreraData: null,
   partidoData: null,
+  futurePartidoData: null,
 };
 
 export const accionGetCarreraData = (carrera) => {
@@ -38,6 +39,13 @@ export const accionGetPartidoData = (partido) => {
   };
 };
 
+export const accionGetFuturePartidoData = (partido) => {
+  return {
+    type: 'GET_FUTURE_PARTIDO_DATA',
+    payload: partido,
+  };
+}
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'GET_TORNEO_DATA':
@@ -47,6 +55,8 @@ const reducer = (state, action) => {
     case 'GET_CARRERA_DATA':
       return { ...state, carreraData: action.payload };
     case 'GET_PARTIDO_DATA':
+      return { ...state, partidoData: action.payload };
+    case 'GET_FUTURE_PARTIDO_DATA':
       return { ...state, partidoData: action.payload };
     default:
       return state;
