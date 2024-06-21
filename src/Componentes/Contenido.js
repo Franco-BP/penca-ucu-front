@@ -9,7 +9,7 @@ const Contenido = () => {
     const torneo = data.torneoData;
 
     useEffect(() => {
-        
+
         getWithResponseManage('/torneo/getAll')
             .then((response) => {
                 dispatch(accionGetTorneoData(response));
@@ -22,13 +22,6 @@ const Contenido = () => {
             <h1>Content</h1>
             <ul>
             </ul>
-            {torneo?.map((torneo) => {
-                return (
-                    <div key={torneo.id}>
-                        <h2>{torneo.nombre}</h2>
-                    </div>
-                )
-            })}
         </div>
     );
 }
