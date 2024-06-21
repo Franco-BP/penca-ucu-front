@@ -35,6 +35,7 @@ const columns = [
     { field: 'name', headerName: 'Name', width: 180, headerAlign: 'center', align: 'center' },
     { field: 'lastname', headerName: 'LastName', width: 180, headerAlign: 'center', align: 'center' },
     { field: 'pts', headerName: 'PTS', type: 'number', width: 90, headerAlign: 'center', align: 'center' },
+    { field: 'carrera', headerName: 'Carrera', width: 180, headerAlign: 'center', align: 'center' }
 ];
 
 const UserRanking = () => {
@@ -54,7 +55,8 @@ const UserRanking = () => {
                     id: user.idUsuario,
                     name: user.nombre,
                     lastname: user.apellido,
-                    pts: predictionData.filter(pred => pred.idUsuario === user.idUsuario).reduce((acc, pred) => acc + pred.puntos, 0) || 0 //sumar los puntos de todas las predicciones
+                    pts: predictionData.filter(pred => pred.idUsuario === user.idUsuario).reduce((acc, pred) => acc + pred.puntos, 0) || 0, //sumar los puntos de todas las predicciones
+                    carrera: user.carrera
                 }));
 
                 rankingData.sort((a, b) => b.pts - a.pts).forEach((user, index) => user.pos = index + 1); //ordenar por puntos y asignarle la pos
@@ -71,7 +73,7 @@ const UserRanking = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <div style={{ height: 370, width: '32.5rem' }}>
+            <div style={{ height: 370, width: '43.5rem' }}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
