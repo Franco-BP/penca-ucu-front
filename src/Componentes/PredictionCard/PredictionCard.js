@@ -1,33 +1,26 @@
-import * as React from 'react';
-import { useState, useContext } from 'react';
-import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { Box, TextField } from '@mui/material';
-import { postWithResponseManage } from "../../services/PencaUCUservices.js";
-import { PencaUCUContext } from '../../context/context.js';
+import React, { useState, useContext } from 'react';
+import { Card, Typography, Button, Box, TextField } from '@mui/material';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-import copaAmericaLogo from '../../assets/copaAmerica.png';
-import { styled } from '@mui/system';
-import MatchCard from '../MatchCard.js';
+import { PencaUCUContext, accionPostPrediccionData, accionSetSelectedPartido } from '../../context/context';
+import { postWithResponseManage } from "../../services/PencaUCUservices";
+import MatchCard from '../MatchCard';
 
-export default function PredictionCard({ match }) {
-
-    const { state } = useContext(PencaUCUContext);
-    //const { partidoData } = state;
+const PredictionCard = () => {
+    const { data, dispatch } = useContext(PencaUCUContext);
+    const selectedPartido = data.selectedPartido; // funcion del contexto que trae el partido seleccionado en el carusel
 
     const [prediccionE1, setPrediccionE1] = useState(0);
     const [prediccionE2, setPrediccionE2] = useState(0);
 
     const handleIncrement = (which) => {
-        if (which === 'teamOne' && prediccionE1 < 99) setPrediccionE1(prev => prev + 1);
-        else if (which === 'teamTwo' && prediccionE2 < 99) setPrediccionE2(prev => prev + 1);
+        if (which === 'teamOne') setPrediccionE1(prev => prev < 99 ? prev + 1 : prev);
+        else setPrediccionE2(prev => prev < 99 ? prev + 1 : prev);
     };
 
     const handleDecrement = (which) => {
-        if (which === 'teamOne' && prediccionE1 > 0) setPrediccionE1(prev => prev - 1);
-        else if (which === 'teamTwo' && prediccionE2 > 0) setPrediccionE2(prev => prev - 1);
+        if (which === 'teamOne') setPrediccionE1(prev => prev > 0 ? prev - 1 : prev);
+        else setPrediccionE2(prev => prev > 0 ? prev - 1 : prev);
     };
 
     const handleInputChange = (event, which) => {
@@ -36,66 +29,46 @@ export default function PredictionCard({ match }) {
         else setPrediccionE2(value);
     };
 
-
-    const handleSave = () => {
+    const handleSave = async () => {
         const predictionData = {
-            prediccion_equipo1: prediccionE1,
-            prediccion_equipo2: prediccionE2,
-            ganador: { id_equipo: prediccionE1 > prediccionE2 ? 1 : 2 },
-            partido: { id_partido: 2 },
-            id_usuario: 1
+            prediccionEquipo1: prediccionE1,
+            prediccionEquipo2: prediccionE2,
+            partido: { idPartido: selectedPartido.idPartido },
+            idUsuario: 1, // cambiar por usuario logueado
+            puntos: 0
         };
-
-        /* postWithResponseManage('/prediccion/create', predictionData)
-            .then((response) => {
-                dispatch(accionPostPrediccionData(response));
-            }); */
+        const response = await postWithResponseManage('/prediccion/create', predictionData);
+        dispatch(accionPostPrediccionData(response));
+        alert('Predicción ingresada correctamente');
     };
 
     return (
-        <Card sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <img src="" alt="" style={{ width: 60, height: 60, marginRight: 2 }} />
-                <Typography variant="h6" color="text.primary">Jeje</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Button onClick={() => handleDecrement('teamOne')}>
-                    <RemoveIcon />
-                </Button>
+        <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', padding: 2 }}>
+            <MatchCard partido={selectedPartido} />
+            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginY: 2 }}>
+                <Button onClick={() => handleDecrement('teamOne')}><RemoveIcon /></Button>
                 <TextField
                     type="number"
                     value={prediccionE1}
                     onChange={(e) => handleInputChange(e, 'teamOne')}
                     inputProps={{ min: 0, max: 99, style: { textAlign: 'center' } }}
                 />
-                <Button onClick={() => handleIncrement('teamOne')}>
-                    <AddIcon />
-                </Button>
-            </Box>
-            <img src={copaAmericaLogo} alt="Copa America" style={{ width: 80, height: 80 }} />
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Button onClick={() => handleDecrement('teamTwo')}>
-                    <RemoveIcon />
-                </Button>
+                <Button onClick={() => handleIncrement('teamOne')}><AddIcon /></Button>
+                <Typography sx={{ mx: 2 }}>vs</Typography>
+                <Button onClick={() => handleDecrement('teamTwo')}><RemoveIcon /></Button>
                 <TextField
                     type="number"
                     value={prediccionE2}
                     onChange={(e) => handleInputChange(e, 'teamTwo')}
                     inputProps={{ min: 0, max: 99, style: { textAlign: 'center' } }}
                 />
-                <Button onClick={() => handleIncrement('teamTwo')}>
-                    <AddIcon />
-                </Button>
-            </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant="h6" color="text.primary">Jeje</Typography>
-                <img src="" alt="" style={{ width: 60, height: 60, marginLeft: 2 }} />
+                <Button onClick={() => handleIncrement('teamTwo')}><AddIcon /></Button>
             </Box>
             <Button onClick={handleSave} variant="contained" color="primary">
                 Guardar
             </Button>
         </Card>
-
     );
-}
+};
 
+export default PredictionCard;

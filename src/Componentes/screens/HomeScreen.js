@@ -2,9 +2,6 @@ import React from 'react'
 import Layout from '../Layout'
 import { Box, Grid, Typography } from '@mui/material'
 import Contenido from '../Contenido'
-import MatchCarousel from '../MatchCarousel'
-import PredictionCard from '../PredictionCard/PredictionCard'
-import UserRanking from '../UserRanking'
 
 const HomeScreen = () => {
   return (
@@ -16,15 +13,6 @@ const HomeScreen = () => {
       </Grid>
       <Box sx={{ flex: 1, marginTop: '1.5rem' }}>
         <Contenido />
-      </Box>
-      <Box>
-        <MatchCarousel />
-      </Box>
-      <Box>
-        <PredictionCard />
-      </Box>
-      <Box>
-        <UserRanking />
       </Box>
     </Layout>
   )

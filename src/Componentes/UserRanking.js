@@ -41,39 +41,24 @@ const UserRanking = () => {
     const [rows, setRows] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async () => { //funcion asincrona para traer los datos de la api
             try {
                 const userDataResponse = await getWithResponseManage('/usuario/getAll');
                 const predictionDataResponse = await getWithResponseManage('/prediccion/getAll');
 
-                console.log('User Data Response:', userDataResponse);
-                console.log('Prediction Data Response:', predictionDataResponse);
-
-
-                // Ensure both responses contain data before proceeding
-                if (!userDataResponse || !predictionDataResponse) {
-                    console.error('Data missing from responses');
-                    return; // Stop execution if data is missing
-                }
-
                 const userData = userDataResponse;
                 const predictionData = predictionDataResponse;
 
-                // Map to accumulate points by user ID
-                const pointsMap = predictionData.reduce((acc, pred) => {
-                    acc[pred.idUsuario] = (acc[pred.idUsuario] || 0) + pred.puntos;
-                    return acc;
-                }, {});
-
-                // Map userData to include points
                 const rankingData = userData.map(user => ({
                     id: user.idUsuario,
                     name: user.nombre,
                     lastname: user.apellido,
-                    pts: pointsMap[user.idUsuario] || 0 // Use points from map or default to 0
+                    pts: predictionData.filter(pred => pred.idUsuario === user.idUsuario).reduce((acc, pred) => acc + pred.puntos, 0) || 0 //sumar los puntos de todas las predicciones
                 }));
 
-                setRows(rankingData.sort((a, b) => b.pts - a.pts)); // Sort by points descending
+                rankingData.sort((a, b) => b.pts - a.pts).forEach((user, index) => user.pos = index + 1); //ordenar por puntos y asignarle la pos
+                setRows(rankingData.sort((a, b) => b.pts - a.pts));
+
                 dispatch(accionGetPrediccionData(rankingData));
             } catch (error) {
                 console.error('Failed to fetch data:', error);

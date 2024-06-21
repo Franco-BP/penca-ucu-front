@@ -3,10 +3,8 @@ import { Card, CardActionArea, CardMedia, Box, Typography } from '@mui/material'
 import formatDate from '../utils/formatDate';
 
 const MatchCard = ({ partido }) => {
-  // Primero verifica si partido y partido.equipos existen
-  if (!partido || !partido.equipos || partido.equipos.length < 2) return null;
+  if (!partido || !partido.equipos || partido.equipos.length < 2) return null; // si no hay partidos no los muestra
 
-  // Asegúrate de que ambos equipos están definidos
   const team1 = partido.equipos[0].equipo;
   const team2 = partido.equipos[1].equipo;
 

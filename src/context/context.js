@@ -9,6 +9,7 @@ export const initialState = {
   partidoData: null,
   futurePartidoData: null,
   prediccionData: null,
+  selectedPartido: null,
 };
 
 export const accionGetCarreraData = (carrera) => {
@@ -60,6 +61,21 @@ export const accionGetUsuarioData = (usuario) => {
   };
 };
 
+export const accionPostPrediccionData = (prediccion) => {
+  return {
+    type: 'POST_PREDICCION_DATA',
+    payload: prediccion,
+  };
+};
+
+export const accionSetSelectedPartido = (partido) => {
+  return {
+    type: 'SET_SELECTED_PARTIDO',
+    payload: partido,
+  };
+};
+
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'GET_TORNEO_DATA':
@@ -76,6 +92,10 @@ const reducer = (state, action) => {
       return { ...state, prediccionData: action.payload };
     case 'GET_USUARIO_DATA':
       return { ...state, userData: action.payload };
+    case 'POST_PREDICCION_DATA':
+      return { ...state, prediccionData: action.payload };
+    case 'SET_SELECTED_PARTIDO':
+      return { ...state, selectedPartido: action.payload };
     default:
       return state;
   }

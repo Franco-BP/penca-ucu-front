@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import MatchCard from './MatchCard';
 import { Box } from '@mui/material';
-import { useContext } from 'react';
-import { PencaUCUContext, accionGetPartidoData, accionGetFuturePartidoData } from '../context/context';
+import { PencaUCUContext, accionGetPartidoData, accionSetSelectedPartido } from '../context/context';
 import { getWithResponseManage } from '../services/PencaUCUservices';
 
 const MatchCarousel = () => {
@@ -18,6 +17,11 @@ const MatchCarousel = () => {
       .catch(error => console.log(error));
   }, [dispatch]);
 
+  const handleSelectPartido = (partido) => {
+    dispatch(accionSetSelectedPartido(partido));
+  };
+
+
   useEffect(() => {
     if (data.partidoData) {
       const groupMatches = (matches, groupSize) => {
@@ -30,7 +34,7 @@ const MatchCarousel = () => {
 
       setGroupedMatches(groupMatches(data.partidoData, 3));
     }
-  }, [data.partidoData]); // This useEffect depends on data.partidoData being updated
+  }, [data.partidoData]);
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -38,7 +42,9 @@ const MatchCarousel = () => {
         {groupedMatches.map((group, index) => (
           <Box key={index} sx={{ display: 'flex', justifyContent: 'space-around' }}>
             {group.map((partido) => (
-              <MatchCard key={partido.idPartido} partido={partido} />
+              <div onClick={() => handleSelectPartido(partido)} key={partido.idPartido}>
+                <MatchCard partido={partido} />
+              </div>
             ))}
           </Box>
         ))}
