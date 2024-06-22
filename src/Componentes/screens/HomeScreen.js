@@ -40,6 +40,7 @@ const HomeScreen = () => {
       <Box sx={{ flex: 1, marginTop: '1rem' }}>
         <MatchCarousel />
       </Box>
+
     </Layout>
   )
 }
