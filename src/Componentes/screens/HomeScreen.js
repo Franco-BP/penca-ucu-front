@@ -5,6 +5,7 @@ import UserRanking from '../UserRanking'
 import MatchCarousel from '../MatchCarousel'
 import { styled } from '@mui/system';
 import Award from '../Award.js'
+import Results from '../Results.js'
 
 
 const CustomSnackbarContent = styled(SnackbarContent)(({ theme }) => ({
@@ -24,19 +25,20 @@ const HomeScreen = () => {
           Ranking
         </Typography>
       </Grid>
-      
+
       <Grid container direction="row" justifyContent="flex-start" alignItems="center">
         <Grid sx={{ flex: 1, marginTop: '1', marginLeft: '2.4rem' }}>
           <UserRanking />
+          <Results />
         </Grid>
         <Grid>
-          <div  sx={{  borderRadius: '15px' }}>
+          <div sx={{ borderRadius: '15px' }}>
             <CustomSnackbarContent message="Copa america 2024" />
           </div>
-          <Award/>
+          <Award />
         </Grid>
       </Grid>
-      
+
       <Box sx={{ flex: 1, marginTop: '1rem' }}>
         <MatchCarousel />
       </Box>
