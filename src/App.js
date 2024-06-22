@@ -6,6 +6,7 @@ import RulesScreen from './Componentes/screens/RulesScreen.js';
 import HomeScreen from './Componentes/screens/HomeScreen.js';
 import RegisterScreen from './Componentes/screens/RegisterScreen.js';
 import LoginScreen from './Componentes/screens/LoginScreen.js';
+import PredictionScreen from './Componentes/screens/PredictionScreen.js';
 
 
 function App() {
@@ -13,11 +14,12 @@ function App() {
     <BrowserRouter>
       <ProviderPencaUCUContext>
         <Routes>
-          <Route path='reglas' element={<RulesScreen />} />
+          <Route path='reglasdejuego' element={<RulesScreen />} />
           <Route path='home' element={<HomeScreen />} />
           <Route path='/' element={<HomeScreen />} />
           <Route path='registrarse' element={<RegisterScreen />} />
           <Route path='iniciar' element={<LoginScreen />} />
+          <Route path='prediccion' element={<PredictionScreen/>}/>
         </Routes>
       </ProviderPencaUCUContext>
 

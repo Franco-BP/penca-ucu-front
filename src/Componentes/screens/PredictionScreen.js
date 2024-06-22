@@ -1,39 +1,31 @@
 import React from 'react'
 import Layout from '../Layout'
 import { Box, Grid, Typography, Stack, SnackbarContent } from '@mui/material'
-import UserRanking from '../UserRanking'
+
 import MatchCarousel from '../MatchCarousel'
 import { styled } from '@mui/system';
-import Award from '../Award.js'
+import PredictionCard from '../PredictionCard/PredictionCard';
+import Statistic from '../Statistic';
 
 
-const CustomSnackbarContent = styled(SnackbarContent)(({ theme }) => ({
-  background: 'linear-gradient(to right, #1C285E, #6A83D2)',
-  borderRadius: '15px',
-  color: 'white',
 
-  boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
-  border: '1px solid #ccc'
-}));
-const HomeScreen = () => {
+
+const PredictionScreen = () => {
   return (
     <Layout>
 
       <Grid item xs={12} sm={12} md={12}>
         <Typography variant="h4" component="h2" sx={{ textAlign: 'left', marginBottom: '0.5rem', marginTop: '1.5rem', marginLeft: '5rem', color: '#1C285E', fontFamily: 'revert', }}>
-          Ranking
+          Ingresa tu prediccion
         </Typography>
       </Grid>
       
-      <Grid xs={3} sm={6} md={6} container direction="row" justifyContent="flex-start" alignItems="center">
+      <Grid container direction="row" justifyContent="flex-start" alignItems="center">
         <Grid sx={{ flex: 1, marginTop: '1', marginLeft: '2.4rem' }}>
-          <UserRanking />
+          <PredictionCard/>
         </Grid>
-        <Grid container direction="column">
-          <Stack  sx={{  borderRadius: '15px' }}>
-            <CustomSnackbarContent message="Copa america 2024" />
-          </Stack>
-          <Award/>
+        <Grid>
+         <Statistic/>
         </Grid>
       </Grid>
       
@@ -44,4 +36,4 @@ const HomeScreen = () => {
   )
 }
 
-export default HomeScreen
+export default PredictionScreen;
