@@ -43,7 +43,7 @@ const PredictionCard = () => {
     };
 
     return (
-        <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', padding: 2 }}>
+        <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', padding: 2 ,width:'40%',  border: '2px solid ', borderColor: '#1C285E', borderRadius:'1rem'}}>
             <MatchCard partido={selectedPartido} />
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginY: 2 }}>
                 <Button onClick={() => handleDecrement('teamOne')}><RemoveIcon /></Button>

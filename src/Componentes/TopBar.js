@@ -12,7 +12,7 @@ import LogoPenca from '../assets/PencaUCU.png';
 import ImagenAvatar from '../assets/78000335.png';
 import { Button } from '@mui/material';
 import { PencaUCUContext } from '../context/context';
-
+import { useNavigate } from 'react-router-dom';
 
 const CustomAppBar = styled(AppBar)({
   marginTop: '40px',
@@ -44,9 +44,9 @@ const CustomAvatar = styled(Avatar)({
 });
 
 const TopBar = () => {
-
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElHamburger, setAnchorElHamburger] = useState(null);
+  const navigate = useNavigate(); // Hook de navegación
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -64,15 +64,18 @@ const TopBar = () => {
     setAnchorElHamburger(null);
   };
 
-  const { data, dispatch } = useContext(PencaUCUContext);
+  const { data } = useContext(PencaUCUContext);
   const usuario = data.usuarioData;
 
-
-  const navItems = ['Resultados', 'Reglas de juego'];
+  const navItems = ['Prediccion', 'Reglas de juego'];
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const handleNavItemClick = (item) => {
+    const path = `/${item.toLowerCase().replace(/ /g, '')}`;
+    navigate(path);
+  };
 
   return (
     <CustomAppBar position="static" className="CustomAppBar">
@@ -83,7 +86,11 @@ const TopBar = () => {
         {!isMobile && (
           <div style={{ flexGrow: 1, display: 'flex' }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff', fontFamily: 'monospace' }}>
+              <Button
+                key={item}
+                sx={{ color: '#fff', fontFamily: 'monospace' }}
+                onClick={() => handleNavItemClick(item)}
+              >
                 {item}
               </Button>
             ))}
@@ -138,7 +145,13 @@ const TopBar = () => {
           onClose={handleCloseHamburgerMenu}
         >
           {navItems.map((item) => (
-            <MenuItem key={item} onClick={handleCloseHamburgerMenu} component="a" href={`/${item.toLowerCase().replace(/ /g, '')}`}>
+            <MenuItem
+              key={item}
+              onClick={() => {
+                handleCloseHamburgerMenu();
+                handleNavItemClick(item);
+              }}
+            >
               {item}
             </MenuItem>
           ))}

@@ -14,7 +14,7 @@ const Award = () => {
       <img
         src={Awards}
         alt="Premios"
-        style={{ cursor: 'pointer', width: '200px', height: 'auto' }}
+        style={{ cursor: 'pointer', width: '350px', height: 'auto' ,marginRight:'7rem'}}
         onClick={handleOpen}
       />
       <Modal
