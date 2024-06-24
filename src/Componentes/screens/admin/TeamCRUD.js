@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Autocomplete, Box, Button, Grid, TextField, Typography } from '@mui/material'
-// import Colorful from '@uiw/react-color-colorful';
+import Colorful from '@uiw/react-color-colorful';
 import FLAGS from '../../../context/LocalData';
 import { postWithResponseManage, getWithResponseManage, putWithResponseManage, deleteWithoutResponseManage } from '../../../services/PencaUCUservices';
 
@@ -117,13 +117,12 @@ const TeamCRUD = () => {
           onChange={(event, newValue) => {
             setFlagCreate(newValue);
           }}
-        />
-        {/* <Colorful
+        /><Colorful
           color={hexaColorCreate}
           onChange={(color) => {
             setHexaColorCreate(color.hex);
           }}
-        /> */}
+        />
         <Button type="create" variant="contained" onClick={handleCreate}> Crear </Button>
       </Box>
 
