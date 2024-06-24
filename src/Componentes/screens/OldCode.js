@@ -25,14 +25,14 @@ const HomeScreen = () => {
         </Typography>
       </Grid>
       
-      <Grid container direction="row" justifyContent="flex-start" alignItems="center">
+      <Grid xs={3} sm={6} md={6} container direction="row" justifyContent="flex-start" alignItems="center">
         <Grid sx={{ flex: 1, marginTop: '1', marginLeft: '2.4rem' }}>
           <UserRanking />
         </Grid>
-        <Grid>
-          <div  sx={{  borderRadius: '15px' }}>
+        <Grid container direction="column">
+          <Stack  sx={{  borderRadius: '15px' }}>
             <CustomSnackbarContent message="Copa america 2024" />
-          </div>
+          </Stack>
           <Award/>
         </Grid>
       </Grid>

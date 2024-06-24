@@ -13,16 +13,16 @@ function App() {
   return (
     <BrowserRouter>
       <ProviderPencaUCUContext>
-      <Routes>
+        <Routes>
           <Route path='reglas' element={<RulesScreen />} />
-          <Route path='home' element={<HomeScreen/>}/>
+          <Route path='home' element={<HomeScreen />} />
           <Route path='/' element={<HomeScreen />} />
           <Route path='administrar' element={<AdminScreen />} />
           <Route path='registrarse' element={<RegisterScreen />} />
           <Route path='iniciar' element={<LoginScreen />} />
-       </Routes>
+        </Routes>
       </ProviderPencaUCUContext>
-   
+
     </BrowserRouter >
   );
 }

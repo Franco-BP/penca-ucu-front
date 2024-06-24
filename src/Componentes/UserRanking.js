@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { getWithResponseManage } from "../services/PencaUCUservices.js";
-import { useContext, useEffect } from 'react';
-import { PencaUCUContext, accionGetTorneoData } from '../context/context.js';
+import { useContext, useEffect, useState } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { PencaUCUContext, accionGetPrediccionData } from '../context/context';
 
-// Creación de un tema personalizado
 const theme = createTheme({
     components: {
         MuiDataGrid: {
@@ -14,7 +13,7 @@ const theme = createTheme({
                     border: 'none',
                 },
                 columnHeader: {
-                    backgroundColor: '#1E3D75',
+                    backgroundColor: '#1C285E',
                     color: 'white'
                 },
                 row: {
@@ -33,40 +32,48 @@ const theme = createTheme({
 
 const columns = [
     { field: 'pos', headerName: 'POS', width: 70, headerAlign: 'center', align: 'center' },
-    { field: 'name', headerName: 'Name', width: 180, headerAlign: 'center', align: 'left' },
-    { field: 'lastname', headerName: 'LastName', width: 180, headerAlign: 'center', align: 'left' },
+    { field: 'name', headerName: 'Name', width: 180, headerAlign: 'center', align: 'center' },
+    { field: 'lastname', headerName: 'LastName', width: 180, headerAlign: 'center', align: 'center' },
     { field: 'pts', headerName: 'PTS', type: 'number', width: 90, headerAlign: 'center', align: 'center' },
-];
-
-const rows = [
-    { id: 1, pos: 1, name: "Enzo", lastname: "Aparicio", pts: 27 },
-    { id: 2, pos: 2, name: "Franco", lastname: "Bascialla", pts: 23 },
-    { id: 3, pos: 3, name: "Yazmin", lastname: "Espagnolo", pts: 21 },
-    { id: 4, pos: 4, name: "Giorgio", lastname: "Santi", pts: 19 },
-    { id: 5, pos: 5, name: "Nicolas", lastname: "Hernandez", pts: 17 }
+    { field: 'carrera', headerName: 'Carrera', width: 300, headerAlign: 'center', align: 'center' }
 ];
 
 const UserRanking = () => {
-
-    const { data, dispatch } = useContext(PencaUCUContext);
-
-    /*     const calcularPuntos = (prediccion) => {
-        }; */
+    const { dispatch } = useContext(PencaUCUContext);
+    const [rows, setRows] = useState([]);
 
     useEffect(() => {
-        getWithResponseManage('/usuario/getAll')
-            .then((response) => {
-                // Suponiendo que la respuesta es un arreglo de objetos con nombre y apellido
-                const users = response.map(user => ({
-                    nombre: user.nombre,
-                    apellido: user.apellido
+        const fetchData = async () => { //funcion asincrona para traer los datos de la api
+            try {
+                const userDataResponse = await getWithResponseManage('/usuario/getAll');
+                const predictionDataResponse = await getWithResponseManage('/prediccion/getAll');
+
+                const userData = userDataResponse;
+                const predictionData = predictionDataResponse;
+
+                const rankingData = userData.map(user => ({
+                    id: user.idUsuario,
+                    name: user.nombre,
+                    lastname: user.apellido,
+                    pts: predictionData.filter(pred => pred.idUsuario === user.idUsuario).reduce((acc, pred) => acc + pred.puntos, 0) || 0, //sumar los puntos de todas las predicciones
+                    carrera: user.carrera.nombre
                 }));
-                dispatch(accionGetTorneoData(users));
-            })
-    }, []);
+
+                rankingData.sort((a, b) => b.pts - a.pts).forEach((user, index) => user.pos = index + 1); //ordenar por puntos y asignarle la pos
+                setRows(rankingData.sort((a, b) => b.pts - a.pts));
+
+                dispatch(accionGetPrediccionData(rankingData));
+            } catch (error) {
+                console.error('Failed to fetch data:', error);
+            }
+
+        };
+        fetchData();
+    }, [dispatch]);
+
     return (
         <ThemeProvider theme={theme}>
-            <div style={{ height: 400, width: '100%' }}>
+            <div style={{ height: 370, width: '50.5rem' }}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
@@ -74,10 +81,10 @@ const UserRanking = () => {
                     rowsPerPageOptions={[5]}
                     disableSelectionOnClick
                     components={{ Toolbar: GridToolbar }}
+                    getRowId={(row) => row.id}
                     sx={{
                         boxShadow: 2,
-                        border: 2,
-                        borderColor: 'primary.light',
+                        border: 'none',
                         '& .MuiDataGrid-toolbarContainer': {
                             borderBottom: '1px solid #ccc',
                         },
@@ -86,6 +93,6 @@ const UserRanking = () => {
             </div>
         </ThemeProvider>
     );
-}
+};
 
 export default UserRanking;
