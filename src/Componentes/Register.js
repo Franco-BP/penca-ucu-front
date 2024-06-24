@@ -23,8 +23,10 @@ export default function FormPropsTextFields() {
         getWithResponseManage('/carrera/getAll')
             .then((response) => {
                 dispatch(accionGetCarreraData(response));
-                if(response[0].idCarrera){
-                    setIdCarrera(1);
+                if(response[0] != undefined){
+                  if(response[0].idCarrera){
+                      setIdCarrera(1);
+                  }
                 }
             })
     }, []);
@@ -86,8 +88,7 @@ export default function FormPropsTextFields() {
         sx={{
           '& .MuiTextField-root': { m: 1, width: '25ch' },
           display: 'grid',
-          height: '100%',
-          marginTop: '3rem'
+          height: '100%'
         }}
         noValidate
         autoComplete="off"
@@ -95,11 +96,10 @@ export default function FormPropsTextFields() {
       >
       <Grid 
       container
-      columnSpacing={5}
+      columnSpacing={4}
       >
        <Grid xs={2}></Grid>
-       <Grid 
-       container
+       <Grid
        direction="column"
        alignItems="center"
        xs={4}>
@@ -116,8 +116,7 @@ export default function FormPropsTextFields() {
               onChange={handleContraseniaChange}
           />
       </Grid>
-      <Grid 
-      container
+      <Grid
       direction="column"
       alignItems="center"
       xs={4}>
@@ -156,9 +155,84 @@ export default function FormPropsTextFields() {
       <Grid
         style={{display: 'flex', justifyContent: 'center', marginTop: '1rem'}}
       >
-        <Button type="submit" variant="contained">Register</Button>
+        <Button type="submit" color='#1C285E' variant="contained">Register</Button>
       </Grid>
 
+      </Box>
+    )}
+    {isMobile && (
+        <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '25ch' },
+          display: 'grid',
+          height: '100%'
+        }}
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
+
+      <Grid 
+      container
+      direction="column"
+      alignItems="center"
+      columnSpacing={4}
+      >
+
+       <Grid 
+       container
+       direction="column"
+       alignItems="center"
+       xs={8}>
+          <TextField
+              required
+              label="Email"
+              type="email"
+              onChange={handleEmailChange}
+          />
+          <TextField
+              required
+              label="Contrasenia"
+              type="password"
+              onChange={handleContraseniaChange}
+          />
+          <TextField
+              required
+              label="Nombre"
+              type="text"
+              onChange={handleNombreChange}
+          />
+          <TextField
+              required
+              label="Apellido"
+              type="text"
+              onChange={handleApellidoChange}
+          />
+          <InputLabel variant="standard" htmlFor="uncontrolled-native">
+              Carrera
+          </InputLabel>
+          <NativeSelect
+              inputProps={{
+              name: 'Carrera',
+              id: 'uncontrolled-native',
+              }}
+              onChange={handleIdCarreraChange}
+              defaultValue={1}
+          >
+              {carreraData?.map((carrera) => {
+                  return (
+                      <option key={carrera.idCarrera} value={carrera.idCarrera}>{carrera.nombre}</option>
+                  )
+              })}
+          </NativeSelect>
+        </Grid>
+        <Grid
+          style={{display: 'flex', justifyContent: 'center', marginTop: '1rem', marginBottom: '2rem'}}
+          >
+          <Button type="submit" color='#1C285E' variant="contained">Register</Button>
+        </Grid>
+      </Grid>
       </Box>
     )}
     </div>

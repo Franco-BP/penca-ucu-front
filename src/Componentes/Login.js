@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import { postWithResponseManage } from '../services/PencaUCUservices';
 import { accionAddUser, PencaUCUContext } from '../context/context';
 import { useNavigate } from 'react-router-dom';
+import { wait } from '@testing-library/user-event/dist/utils';
 
 export default function FormPropsTextFields() {
 
@@ -31,6 +32,7 @@ export default function FormPropsTextFields() {
             dispatch(accionAddUser(response))
             if (response.idUsuario) {
                 navigate('/home');
+                console.log(response);
             }
         })
   };
@@ -43,7 +45,7 @@ export default function FormPropsTextFields() {
         display: 'grid',
         placeItems: 'center',
         height: '100%',
-        marginTop: '3rem'
+        marginBottom: '2rem'
       }}
       noValidate
       autoComplete="off"
@@ -63,7 +65,7 @@ export default function FormPropsTextFields() {
         value={contrasenia}
         onChange={handleContraseniaChange}
       />
-      <Button type="submit" variant="contained">Login</Button>
+      <Button type="submit" color='#1C285E' variant="contained">Login</Button>
     </Box>
   );
 
