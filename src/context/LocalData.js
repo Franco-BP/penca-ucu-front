@@ -1,20 +1,20 @@
 const FLAGS = [
-  { name: "argentina.png" },
-  { name: "bolivia.png" },
-  { name: "brasil.png" },
-  { name: "canada.png" },
-  { name: "chile.png" },
-  { name: "colombia.png" },
-  { name: "costaRica.png" },
-  { name: "ecuador.png" },
-  { name: "jamaica.png" },
-  { name: "mexico.png" },
-  { name: "panama.png" },
-  { name: "paraguay.png" },
-  { name: "peru.png" },
-  { name: "uruguay.png" },
-  { name: "usa.png" },
-  { name: "venezuela.png" }
-]
+  "argentina.png",
+  "bolivia.png",
+  "brasil.png",
+  "canada.png",
+  "chile.png",
+  "colombia.png",
+  "costaRica.png",
+  "ecuador.png",
+  "jamaica.png",
+  "mexico.png",
+  "panama.png",
+  "paraguay.png",
+  "peru.png",
+  "uruguay.png",
+  "usa.png",
+  "venezuela.png"
+];
 
 export default FLAGS;

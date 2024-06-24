@@ -36,11 +36,13 @@ const AdminScreen = () => {
   return (
     <Layout>
       <Grid item xs={12} sm={12} md={12}>
-        <Typography variant="h4" component="h2" sx={{ textAlign: 'left', marginBottom:'0.5rem',marginTop:'3rem',marginLeft:'5rem', color:'#1C285E',fontFamily: 'revert',}}>
+        <Typography variant="h4" component="h2" sx={{ textAlign: 'left', marginBottom:'2rem',marginTop:'3rem',marginLeft:'5rem', color:'#1C285E',fontFamily: 'revert',}}>
           Administrar datos
         </Typography>
       </Grid>
-      <TeamCRUD/>
+      <Grid item xs={12} sm={6} md={4} sx={{display: 'flex', flexDirection: 'column', alignContent: 'space-evenly', justifyContent: 'space-evenly'}}>
+        <TeamCRUD/>
+      </Grid>
     </Layout>
   )
 }

@@ -11,7 +11,6 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "@uiw/react-color-colorful": "^2.3.0",
     "axios": "^1.7.2",
     "reach": "^1.0.1",
     "react": "^18.3.1",
