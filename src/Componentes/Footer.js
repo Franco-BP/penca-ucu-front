@@ -2,7 +2,7 @@ import React from "react";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import { Button, Grid, Link } from "@mui/material";
+import { Button, Grid, Link, useMediaQuery, useTheme } from "@mui/material";
 import LogoPenca from '../assets/PencaUCU.png';
 import { styled } from '@mui/system';
 
@@ -15,6 +15,9 @@ const LogoImage = styled('img')({
 });
 
 const Footer = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     return (
         <Grid container justifyContent="space-between" alignItems="center" spacing={1} sx={{ backgroundColor: '#1C285E', padding: '10px 20px' }}>
             <Grid item>
@@ -30,18 +33,22 @@ const Footer = () => {
                     PencaUCU
                 </p>
             </Grid>
-            <Grid item>
-                <Grid container justifyContent="center" alignItems="center" spacing={1}>
-                    <Button component="a" href="/">
-                        <LogoImage src={LogoPenca} alt="logo" />
-                    </Button>
+            {!isMobile && (
+                <Grid item>
+                    <Grid container justifyContent="center" alignItems="center" spacing={1}>
+                        <Button component="a" href="/">
+                            <LogoImage src={LogoPenca} alt="logo" />
+                        </Button>
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid item>
-                <p style={{ color: 'white', fontSize: '0.8rem', fontFamily: 'monospace', margin: 0 }}>
-                    PencaUCU
-                </p>
-            </Grid>
+            )}
+            {!isMobile && (
+                <Grid item>
+                    <p style={{ color: 'white', fontSize: '0.8rem', fontFamily: 'monospace', margin: 0 }}>
+                        PencaUCU
+                    </p>
+                </Grid>
+            )}
             <Grid item>
                 <Grid container justifyContent="center" alignItems="center" spacing={1}>
                     <Grid item>
