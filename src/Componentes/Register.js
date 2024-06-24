@@ -155,7 +155,7 @@ export default function FormPropsTextFields() {
       <Grid
         style={{display: 'flex', justifyContent: 'center', marginTop: '1rem'}}
       >
-        <Button type="submit" variant="contained">Register</Button>
+        <Button type="submit" color='#1C285E' variant="contained">Register</Button>
       </Grid>
 
       </Box>
@@ -230,7 +230,7 @@ export default function FormPropsTextFields() {
         <Grid
           style={{display: 'flex', justifyContent: 'center', marginTop: '1rem', marginBottom: '2rem'}}
           >
-          <Button type="submit" variant="contained">Register</Button>
+          <Button type="submit" color='#1C285E' variant="contained">Register</Button>
         </Grid>
       </Grid>
       </Box>

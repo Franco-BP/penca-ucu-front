@@ -65,7 +65,7 @@ export default function FormPropsTextFields() {
         value={contrasenia}
         onChange={handleContraseniaChange}
       />
-      <Button type="submit" variant="contained">Login</Button>
+      <Button type="submit" color='#1C285E' variant="contained">Login</Button>
     </Box>
   );
 
