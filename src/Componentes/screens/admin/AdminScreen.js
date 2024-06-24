@@ -4,6 +4,7 @@ import Layout from '../../Layout'
 import { Box, Grid, Typography } from '@mui/material';
 import { PencaUCUContext } from '../../../context/context';
 import TeamCRUD from './TeamCRUD';
+import MatchCRUD from './MatchCRUD';
 
 
 const AdminScreen = () => {
@@ -50,9 +51,9 @@ const AdminScreen = () => {
         </Box>
         <Box>
           <Typography variant="h5" component="h2" sx={subtitles}>
-            Editar equipos
+            Editar partidos
           </Typography>
-          <TeamCRUD/>
+          <MatchCRUD/>
         </Box>
       </Grid>
     </Layout>

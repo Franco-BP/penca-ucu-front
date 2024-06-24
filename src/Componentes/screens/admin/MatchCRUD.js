@@ -1,6 +1,8 @@
 import { Autocomplete, Box, Button, Grid, TextField, Typography } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
-import React, { useState } from 'react'
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import React, { useState, useEffect } from 'react'
+import { deleteWithoutResponseManage, getWithResponseManage, postWithResponseManage, putWithResponseManage } from '../../../services/PencaUCUservices';
 
 const MatchCRUD = () => {
 
@@ -14,6 +16,16 @@ const MatchCRUD = () => {
   const [tourneyCreate, setTourneyCreate] = useState();
   const [team1Create, setTeam1Create] = useState();
   const [team2Create, setTeam2Create] = useState();
+  
+  const [dateUpdate, setDateUpdate] = useState();
+  const [stadiumUpdate, setStadiumUpdate] = useState();
+  const [tourneyUpdate, setTourneyUpdate] = useState();
+  const [team1Update, setTeam1Update] = useState();
+  const [team2Update, setTeam2Update] = useState();
+  const [team1UpdateResult, setTeam1UpdateResult] = useState();
+  const [team2UpdateResult, setTeam2UpdateResult] = useState();
+
+  const [idDelete, setIdDelete] = useState();
 
   useEffect(() => {
     getWithResponseManage('/partido/getAll')
@@ -33,58 +45,92 @@ const MatchCRUD = () => {
     .catch((error) => {console.error(error)});
   }, []);
 
-  const handleNameUpdateSelect = (event, newValue) => {
-    if (newValue){
-      setNameUpdate(newValue.nombre);
-      setFlagUpdate(newValue.imgBandera);
-      setHexaColorUpdate(newValue.color);
-      setIdUpdate(newValue.idEquipo);
-    }
-  };
-
-  const handleNameDeleteSelect = (event, newValue) => {
-    if (newValue){
-      setIdDelete(newValue.idEquipo);
+  const valuesToJSON = ({date, stadium, tourney, team1, team2}) => {
+    return {
+      fecha: date,
+      estadio: stadium,
+      idTorneo: tourney.idTorneo,
+      equipos: [
+        {
+          tipoEquipo: 1,
+          equipo: {
+            idEquipo: team1.idEquipo
+          }
+        },
+        {
+          tipoEquipo: 2,
+          equipo: {
+            idEquipo: team2.idEquipo
+          }
+        },
+      ]
     };
   };
 
+  const cleanCreate = () => {
+    setDateCreate(null);
+    setStadiumCreate(null);
+    setTourneyCreate(null);
+    setTeam1Create(null);
+    setTeam2Create(null);
+  };
+
+  const cleanUpdate = () => {
+    setDateUpdate(null);
+    setStadiumUpdate(null);
+    setTourneyUpdate(null);
+    setTeam1Update(null);
+    setTeam2Update(null);
+  };
+
+  // const handleNameUpdateSelect = (event, newValue) => {
+  //   if (newValue){
+  //     setNameUpdate(newValue.nombre);
+  //     setFlagUpdate(newValue.imgBandera);
+  //     setHexaColorUpdate(newValue.color);
+  //     setIdUpdate(newValue.idEquipo);
+  //   }
+  // };
+
+  // const handleNameDeleteSelect = (event, newValue) => {
+  //   if (newValue){
+  //     setIdDelete(newValue.idEquipo);
+  //   };
+  // };
+
   const handleCreate = () => {
     if (dateCreate && stadiumCreate && tourneyCreate && team1Create && team2Create) {
-      postWithResponseManage('/partido/create', {
-        fecha: nameCreate,
-        estadio: flagCreate,
-        idTorneo: tourneyCreate.idTorneo,
-        
-      })
+      postWithResponseManage('/partido/create', valuesToJSON({
+        date: dateCreate, stadium: stadiumCreate, tourney: tourneyCreate, team1: team1Create, team2: team2Create
+    }))
       .then((response) => {
-        if (response.idEquipo) {
-          alert("Creacion exitosa.")
+        if (response.idPartido) {
+          alert("Creación exitosa.")
+          cleanCreate();
         } else {
-          alert("Error desconocido en la creacion.")
+          alert("Error desconocido en la creación.")
         }
       })
     } else {
-      alert("Valores faltantes para la creacion");
+      alert("Valores faltantes para la creación.");
     }
   }
 
   const handleUpdate = () => {
-    if (idUpdate && nameUpdate && flagUpdate && hexaColorUpdate) {
-      putWithResponseManage('/equipo/update', {
-        idEquipo: idUpdate,
-        nombre: nameUpdate,
-        imgBandera: flagUpdate,
-        color: hexaColorUpdate
-      })
+    if (dateUpdate && stadiumUpdate && tourneyUpdate && team1Update && team2Update) {
+      putWithResponseManage('/partido/update', valuesToJSON({
+        date: dateUpdate, stadium: stadiumUpdate, tourney: tourneyUpdate, team1: team1Update, team2: team2Update
+    }))
       .then((response) => {
-        if (response.idEquipo) {
-          alert("Actualizacion exitosa.")
+        if (response.idPartido) {
+          alert("Actualización exitosa.")
+          cleanUpdate();
         } else {
-          alert("Error desconocido en la actualizacion.")
+          alert("Error desconocido en la actualización.")
         }
       })
     } else {
-      alert("Valores faltantes para la actualizacion");
+      alert("Valores faltantes para la actualización.");
     }
   }
 
@@ -92,7 +138,7 @@ const MatchCRUD = () => {
     if (idDelete) {
       try {
         await deleteWithoutResponseManage('/equipo/delete', {
-          idEquipo: idDelete,
+          idPartido: idDelete,
         });
         alert("Eliminación exitosa.");
         setIdDelete(null);
@@ -110,11 +156,14 @@ const MatchCRUD = () => {
         <Typography sx={{marginBottom: '1rem'}}>
           Crear Partido
         </Typography>
-        <DatePicker label="fecha*"/>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker label="fecha*" onChange={setDateCreate} sx={{marginBottom: '1rem'}}/>
+        </LocalizationProvider>
         <Autocomplete
           disablePortal
           id="stadium-create"
           options={stadiumList}
+          getOptionLabel={(stadium) => stadium.nombre}
           sx={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="estadio*" />}
           onChange={(event, newValue) => {
@@ -125,6 +174,7 @@ const MatchCRUD = () => {
           disablePortal
           id="tourney-create"
           options={tourneysList}
+          getOptionLabel={(tourney) => tourney.nombre}
           sx={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="torneo*" />}
           onChange={(event, newValue) => {
@@ -135,6 +185,7 @@ const MatchCRUD = () => {
           disablePortal
           id="team1-create"
           options={teamsList}
+          getOptionLabel={(team) => team.nombre}
           sx={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="equipo 1*" />}
           onChange={(event, newValue) => {
@@ -145,6 +196,7 @@ const MatchCRUD = () => {
           disablePortal
           id="team2-create"
           options={teamsList}
+          getOptionLabel={(team) => team.nombre}
           sx={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="equipo 2*" />}
           onChange={(event, newValue) => {
@@ -154,34 +206,73 @@ const MatchCRUD = () => {
         <Button type="create" variant="contained" onClick={handleCreate}> Crear </Button>
       </Box>
 
-      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', '& > *': { marginBottom: '1rem' }}}>
+      {/* <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', '& > *': { marginBottom: '1rem' }}}>
         <Typography sx={{marginBottom: '1rem'}}>
-          Actualizar equipo
+          Actualizar partido
         </Typography>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker label="fecha*" onChange={setDateUpdate} sx={{marginBottom: '1rem'}}/>
+        </LocalizationProvider>
         <Autocomplete
           disablePortal
-          id="autocomplete-names-update"
-          options={teamsList}
-          getOptionLabel={(option) => option.nombre}
+          id="stadium-update"
+          options={stadiumList}
+          getOptionLabel={(stadium) => stadium.nombre}
           sx={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="nombre del equipo*" />}
-          onChange={handleNameUpdateSelect}
-        />
-        <Autocomplete
-          disablePortal
-          id="autocomplete-flags-update"
-          options={flagsList}
-          sx={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="bandera*" />}
-          value={flagUpdate}
+          renderInput={(params) => <TextField {...params} label="estadio*" />}
           onChange={(event, newValue) => {
-            setFlagUpdate(newValue);
+            setStadiumUpdate(newValue);
           }}
         />
+        <Autocomplete
+          disablePortal
+          id="tourney-update"
+          options={tourneysList}
+          getOptionLabel={(tourney) => tourney.nombre}
+          sx={{ width: 300 }}
+          renderInput={(params) => <TextField {...params} label="torneo*" />}
+          onChange={(event, newValue) => {
+            setTourneyUpdate(newValue);
+          }}
+        />
+        <Autocomplete
+          disablePortal
+          id="team1-update"
+          options={teamsList}
+          getOptionLabel={(team) => team.nombre}
+          sx={{ width: 300 }}
+          renderInput={(params) => <TextField {...params} label="equipo 1*" />}
+          onChange={(event, newValue) => {
+            setTeam1Update(newValue);
+          }}
+        />
+        <Autocomplete
+          disablePortal
+          id="team2-update"
+          options={teamsList}
+          getOptionLabel={(team) => team.nombre}
+          sx={{ width: 300 }}
+          renderInput={(params) => <TextField {...params} label="equipo 2*" />}
+          onChange={(event, newValue) => {
+            setTeam2Update(newValue);
+          }}
+        />
+        <Box sx={{display:'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+          <TextField variant="outlined" fullWidth type="number" sx={{marginBottom: '1rem'}}
+            value={team1UpdateResult}
+            label={`Resultado ${team1Update?.nombre}*`}
+            onChange={(event) => {setTeam1UpdateResult(event.target.value)}} 
+          />
+          <TextField variant="outlined" fullWidth type="number" sx={{marginBottom: '1rem'}}
+            value={team2UpdateResult}
+            label={`Resultado ${team2Update?.nombre}*`}
+            onChange={(event) => {setTeam2UpdateResult(event.target.value)}} 
+          />
+        </Box>
        <Button type="update" variant="contained" onClick={handleUpdate}> Actualizar </Button>
-      </Box>
+      </Box> */}
 
-      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', '& > *': { marginBottom: '1rem' }}}>
+      {/* <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', '& > *': { marginBottom: '1rem' }}}>
         <Typography sx={{marginBottom: '1rem'}}>
           Eliminar equipo
         </Typography>
@@ -195,7 +286,7 @@ const MatchCRUD = () => {
           onChange={handleNameDeleteSelect}
         />
         <Button type="update" variant="contained" onClick={handleDelete}> Eliminar </Button>
-      </Box>
+      </Box> */}
     </Grid>
   )
 }
