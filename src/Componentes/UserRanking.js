@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { getWithResponseManage } from "../services/PencaUCUservices.js";
 import { useContext, useEffect } from 'react';
-import { PencaUCUContext, accionGetTorneoData } from '../Context/context.js';
+import { PencaUCUContext, accionGetTorneoData } from '../context/context.js';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
