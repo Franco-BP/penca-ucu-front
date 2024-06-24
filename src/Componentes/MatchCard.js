@@ -21,8 +21,8 @@ const MatchCard = ({ partido }) => {
   const team2 = partido.equipos[1].equipo;
   console.log()
 
-  const team1Flag = require(`../assets/Banderas/${team1.imgBandera}`);
-  const team2Flag = require(`../assets/Banderas/${team2.imgBandera}`);
+  const team1Flag = require(`../assets/banderas/${team1.imgBandera}`);
+  const team2Flag = require(`../assets/banderas/${team2.imgBandera}`);
 
 
   return (
