@@ -67,7 +67,7 @@ const TopBar = () => {
   const { data } = useContext(PencaUCUContext);
   const usuario = data.usuarioData;
 
-  const navItems = ['Prediccion', 'Reglas de juego'];
+  const navItems = ['Resultados', 'Reglas de juego'];
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
