@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../Layout'
-import { Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import { PencaUCUContext } from '../../../context/context';
 import TeamCRUD from './TeamCRUD';
 
@@ -10,6 +10,7 @@ const AdminScreen = () => {
 
   const { data, dispatch } = useContext(PencaUCUContext);
   const usuario = data.usuarioData;
+  const subtitles = { textAlign: 'left', marginTop:'3rem', marginLeft:'5rem', color:'#1C285E', fontFamily: 'revert'}
 
   const navigate = useNavigate();
 
@@ -41,7 +42,18 @@ const AdminScreen = () => {
         </Typography>
       </Grid>
       <Grid item xs={12} sm={6} md={4} sx={{display: 'flex', flexDirection: 'column', alignContent: 'space-evenly', justifyContent: 'space-evenly'}}>
-        <TeamCRUD/>
+        <Box>
+          <Typography variant="h5" component="h2" sx={subtitles}>
+            Editar equipos
+          </Typography>
+          <TeamCRUD/>
+        </Box>
+        <Box>
+          <Typography variant="h5" component="h2" sx={subtitles}>
+            Editar equipos
+          </Typography>
+          <TeamCRUD/>
+        </Box>
       </Grid>
     </Layout>
   )

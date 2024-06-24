@@ -1,27 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import { Autocomplete, Box, Button, Grid, TextField, Typography } from '@mui/material'
-import FLAGS from '../../../context/LocalData';
-import { postWithResponseManage, getWithResponseManage, putWithResponseManage, deleteWithoutResponseManage } from '../../../services/PencaUCUservices';
-import { HexColorInput, HexColorPicker } from 'react-colorful';
+import { Autocomplete, Box, Button, Grid, TextField, Typography } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
+import React, { useState } from 'react'
 
-const TeamCRUD = () => {
-  
-  const flagsList = FLAGS;
-  const [nameCreate, setNameCreate] = useState('');
-  const [flagCreate, setFlagCreate] = useState(null);
-  const [hexaColorCreate, setHexaColorCreate] = useState('#FFFFFF');
-  
+const MatchCRUD = () => {
+
+  const [matchesList, setMatchesList] = useState([]);
   const [teamsList, setTeamsList] = useState([]);
-  const [flagUpdate, setFlagUpdate] = useState(null);
-  const [hexaColorUpdate, setHexaColorUpdate] = useState('#FFFFFF');
-  const [nameUpdate, setNameUpdate] = useState(null);
-  const [idUpdate, setIdUpdate] = useState(0);
+  const [tourneysList, setTourneysList] = useState([]);
+  const [stadiumList, setStadiumList] = useState([]);
 
-  const [idDelete, setIdDelete] = useState(0);
+  const [dateCreate, setDateCreate] = useState();
+  const [stadiumCreate, setStadiumCreate] = useState();
+  const [tourneyCreate, setTourneyCreate] = useState();
+  const [team1Create, setTeam1Create] = useState();
+  const [team2Create, setTeam2Create] = useState();
 
   useEffect(() => {
+    getWithResponseManage('/partido/getAll')
+    .then((response) => { setMatchesList(response) })
+    .catch((error) => {console.error(error)});
+    
     getWithResponseManage('/equipo/getAll')
     .then((response) => { setTeamsList(response) })
+    .catch((error) => {console.error(error)});
+
+    getWithResponseManage('/torneo/getAll')
+    .then((response) => { setTourneysList(response) })
+    .catch((error) => {console.error(error)});
+
+    getWithResponseManage('/estadio/getAll')
+    .then((response) => { setStadiumList(response) })
     .catch((error) => {console.error(error)});
   }, []);
 
@@ -41,11 +49,12 @@ const TeamCRUD = () => {
   };
 
   const handleCreate = () => {
-    if (nameCreate && flagCreate && hexaColorCreate) {
-      postWithResponseManage('/equipo/create', {
-        nombre: nameCreate,
-        imgBandera: flagCreate,
-        color: hexaColorCreate
+    if (dateCreate && stadiumCreate && tourneyCreate && team1Create && team2Create) {
+      postWithResponseManage('/partido/create', {
+        fecha: nameCreate,
+        estadio: flagCreate,
+        idTorneo: tourneyCreate.idTorneo,
+        
       })
       .then((response) => {
         if (response.idEquipo) {
@@ -99,24 +108,49 @@ const TeamCRUD = () => {
     <Grid item xs={12} sm={6} md={4} sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
       <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', '& > *': { marginBottom: '1rem' }}}>
         <Typography sx={{marginBottom: '1rem'}}>
-          Crear equipo
+          Crear Partido
         </Typography>
-        <TextField label="nombre del equipo*" variant="outlined" fullWidth value={nameCreate}
-          sx={{marginBottom: '1rem'}}
-          onChange={(event) => {setNameCreate(event.target.value)}} 
+        <DatePicker label="fecha*"/>
+        <Autocomplete
+          disablePortal
+          id="stadium-create"
+          options={stadiumList}
+          sx={{ width: 300 }}
+          renderInput={(params) => <TextField {...params} label="estadio*" />}
+          onChange={(event, newValue) => {
+            setStadiumCreate(newValue);
+          }}
         />
         <Autocomplete
           disablePortal
-          id="autocomplete-flags-create"
-          options={flagsList}
+          id="tourney-create"
+          options={tourneysList}
           sx={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="bandera*" />}
+          renderInput={(params) => <TextField {...params} label="torneo*" />}
           onChange={(event, newValue) => {
-            setFlagCreate(newValue);
+            setTourneyCreate(newValue);
           }}
         />
-        <HexColorPicker color={hexaColorCreate} onChange={setHexaColorCreate} />
-        <HexColorInput color={hexaColorCreate} onChange={setHexaColorCreate} />
+        <Autocomplete
+          disablePortal
+          id="team1-create"
+          options={teamsList}
+          sx={{ width: 300 }}
+          renderInput={(params) => <TextField {...params} label="equipo 1*" />}
+          onChange={(event, newValue) => {
+            setTeam1Create(newValue);
+          }}
+        />
+        <Autocomplete
+          disablePortal
+          id="team2-create"
+          options={teamsList}
+          sx={{ width: 300 }}
+          renderInput={(params) => <TextField {...params} label="equipo 2*" />}
+          onChange={(event, newValue) => {
+            setTeam2Create(newValue);
+          }}
+        />
         <Button type="create" variant="contained" onClick={handleCreate}> Crear </Button>
       </Box>
 
@@ -144,8 +178,6 @@ const TeamCRUD = () => {
             setFlagUpdate(newValue);
           }}
         />
-       <HexColorPicker color={hexaColorUpdate} onChange={setHexaColorUpdate} />
-       <HexColorInput color={hexaColorUpdate} onChange={setHexaColorUpdate} />
        <Button type="update" variant="contained" onClick={handleUpdate}> Actualizar </Button>
       </Box>
 
@@ -168,4 +200,4 @@ const TeamCRUD = () => {
   )
 }
 
-export default TeamCRUD;
+export default MatchCRUD
