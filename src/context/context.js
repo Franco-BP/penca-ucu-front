@@ -75,6 +75,13 @@ export const accionSetSelectedPartido = (partido) => {
   };
 };
 
+export const accionUserLogout = () => {
+  return {
+    type: 'USER_LOGOUT',
+    payload: null,  
+  };
+}
+
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -96,6 +103,8 @@ const reducer = (state, action) => {
       return { ...state, prediccionData: action.payload };
     case 'SET_SELECTED_PARTIDO':
       return { ...state, selectedPartido: action.payload };
+    case 'USER_LOGOUT':
+      return { ...state, userData: action.payload };
     default:
       return state;
   }
