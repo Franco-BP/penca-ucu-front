@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { postWithResponseManage } from '../services/PencaUCUservices';
-import { accionAddUser, PencaUCUContext } from '../context/context';
+import { accionAddUsuario, PencaUCUContext } from '../context/context';
 import { useNavigate } from 'react-router-dom';
 import { wait } from '@testing-library/user-event/dist/utils';
 
@@ -27,12 +27,19 @@ export default function FormPropsTextFields() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const loginDetails = { email, contrasenia };
+    if (!loginDetails.email || !loginDetails.contrasenia) {
+        alert('Por favor complete todos los campos');
+        return;
+    }
     postWithResponseManage('/usuario/login', loginDetails)
         .then((response) => {
-            dispatch(accionAddUser(response))
+            dispatch(accionAddUsuario(response))
             if (response.idUsuario) {
                 navigate('/home');
                 console.log(response);
+            }
+            else {
+                alert('Usuario o contrasenia incorrectos');
             }
         })
   };
@@ -65,7 +72,7 @@ export default function FormPropsTextFields() {
         value={contrasenia}
         onChange={handleContraseniaChange}
       />
-      <Button type="submit" color='#1C285E' variant="contained">Login</Button>
+      <Button sx={{backgroundColor:"#1C285E"}} type="submit" variant="contained">Login</Button>
     </Box>
   );
 
