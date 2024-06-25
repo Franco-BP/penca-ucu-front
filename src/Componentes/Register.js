@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/system';
 import { postWithResponseManage, getWithResponseManage } from '../services/PencaUCUservices';
-import { accionGetCarreraData, PencaUCUContext, accionAddUser } from '../context/context';
+import { accionGetCarreraData, PencaUCUContext, accionAddUsuario } from '../context/context';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from '@mui/material';
 import { NativeSelect, InputLabel } from '@mui/material';
@@ -68,10 +68,14 @@ export default function FormPropsTextFields() {
     event.preventDefault();
     const carrera = {idCarrera};
     const registerDetails = { email, contrasenia, nombre, apellido, carrera};
+    if (!email || !contrasenia || !nombre || !apellido || !idCarrera) {
+        alert('Por favor complete todos los campos');
+        return;
+      }
     postWithResponseManage('/usuario/create', registerDetails)
         .then((response) => {
             console.log(registerDetails)
-            dispatch(accionAddUser(response))
+            dispatch(accionAddUsuario(response))
             if (response.idUsuario) {
                 console.log(response)
                 navigate('/home');
@@ -155,7 +159,7 @@ export default function FormPropsTextFields() {
       <Grid
         style={{display: 'flex', justifyContent: 'center', marginTop: '1rem'}}
       >
-        <Button type="submit" color='#1C285E' variant="contained">Register</Button>
+        <Button type="submit" sx={{backgroundColor:"#1C285E"}} variant="contained">Register</Button>
       </Grid>
 
       </Box>
@@ -230,7 +234,7 @@ export default function FormPropsTextFields() {
         <Grid
           style={{display: 'flex', justifyContent: 'center', marginTop: '1rem', marginBottom: '2rem'}}
           >
-          <Button type="submit" color='#1C285E' variant="contained">Register</Button>
+          <Button type="submit" sx={{backgroundColor:"#1C285E"}} variant="contained">Register</Button>
         </Grid>
       </Grid>
       </Box>
