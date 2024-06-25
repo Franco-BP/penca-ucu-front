@@ -12,7 +12,7 @@ function formatDate(fechaString) {
   const nombreDia = diasSemana[diaSemana];
   const nombreMes = meses[mes];
 
-  const fechaFormateada = `${nombreDia} ${diaMes} - ${hora}:${minutos}hs`;
+  const fechaFormateada = `${nombreDia} ${diaMes} - ${hora}:${minutos == 0 ? "00" : minutos}hs`;
   return fechaFormateada;
 }
 
