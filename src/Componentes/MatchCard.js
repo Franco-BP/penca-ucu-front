@@ -16,10 +16,8 @@ const MatchCard = ({ partido }) => {
   };
 
   const team1 = partido.equipos[0].equipo;
-  console.log(team1.imgBandera)
 
   const team2 = partido.equipos[1].equipo;
-  console.log()
 
   const team1Flag = require(`../assets/banderas/${team1.imgBandera}`);
   const team2Flag = require(`../assets/banderas/${team2.imgBandera}`);
@@ -30,19 +28,19 @@ const MatchCard = ({ partido }) => {
       display: 'flex', flexDirection: 'column', width: '25rem', height: '10rem',
       justifyContent: 'space-between', border: '2px solid ', borderColor: '#1C285E', borderRadius: '2rem'
     }}>
-      <CardActionArea sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', paddingY: '0.5rem', borderBottomRightRadius: 0, borderBottomLeftRadius: 0 }}
+      <CardActionArea onClick={handleIngresarClick} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', paddingY: '0.5rem', borderBottomRightRadius: 0, borderBottomLeftRadius: 0 }}
       >
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', width: '40%', textAlign: 'center', alignItems: 'center' }}>
           <CardMedia
             sx={{ width: '5rem', height: '5rem' }}
             component="img"
             src={team1Flag}
             alt={team1.nombre}
           />
-          <Typography sx={{ marginY: '0.5rem' }}>{team1.nombre}</Typography>
+          <Typography sx={{ marginY: '0.5rem'}}>{team1.nombre}</Typography>
         </Box>
-        <Button variant="contained" sx={{ backgroundColor: '#1C285E', color: 'white', borderRadius: '1rem'  }}onClick={handleIngresarClick}>Ingresar</Button>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Button variant="contained" sx={{ backgroundColor: '#1C285E', color: 'white', borderRadius: '1rem', width: '20%' }}>Ingresar</Button>
+        <Box sx={{ display: 'flex', flexDirection: 'column', width: '40%', textAlign: 'center', alignItems: 'center' }}>
           <CardMedia
             sx={{ width: '5rem', height: '5rem' }}
             component="img"

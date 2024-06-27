@@ -1,11 +1,10 @@
 import React from 'react'
 import Layout from '../Layout'
-import { Box, Grid, Typography, Stack, SnackbarContent } from '@mui/material'
+import { Box, Grid, Typography, SnackbarContent } from '@mui/material'
 import UserRanking from '../UserRanking'
 import MatchCarousel from '../MatchCarousel'
 import { styled } from '@mui/system';
 import Award from '../Award.js'
-
 
 const CustomSnackbarContent = styled(SnackbarContent)(({ theme }) => ({
   background: 'linear-gradient(to right, #1C285E, #6A83D2)',
@@ -15,6 +14,7 @@ const CustomSnackbarContent = styled(SnackbarContent)(({ theme }) => ({
   boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
   border: '1px solid #ccc'
 }));
+
 const HomeScreen = () => {
   return (
     <Layout>
