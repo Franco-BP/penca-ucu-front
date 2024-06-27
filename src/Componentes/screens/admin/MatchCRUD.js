@@ -80,14 +80,14 @@ const MatchCRUD = () => {
 
   const handleSelectUpdate = (newValue) => {
     setMatchUpdate(newValue);
-    if (newValue.equipos.at(0).tipoEquipo == 1) {
+    if (newValue.equipos.at(0).tipoEquipo === 1) {
       setTeam1Update(newValue.equipos.at(0));
       setTeam2Update(newValue.equipos.at(1));
-    } else if (newValue.equipos.at(0).tipoEquipo == 2) {
+    } else if (newValue.equipos.at(0).tipoEquipo === 2) {
       setTeam2Update(newValue.equipos.at(0));
       setTeam1Update(newValue.equipos.at(1));
     };
-  }
+  };
 
   const handleCreate = () => {
     if (dateCreate && stadiumCreate && tourneyCreate && team1Create && team2Create) {
@@ -105,24 +105,31 @@ const MatchCRUD = () => {
     } else {
       alert("Valores faltantes para la creación.");
     }
-  }
+  };
 
   const handleUpdate = () => {
-    if (matchUpdate && team1Update && team2Update) {
-      putWithResponseManage('/partido/update', {
-        ...matchUpdate, equipos: [team1Update, team2Update]
-      })
+    if (matchUpdate && team1Update && team2Update && team1Update.resultado && team2Update.resultado) {
+      let matchDTO = {...matchUpdate, equipos: [team1Update, team2Update]};
+      putWithResponseManage('/partido/update', matchDTO)
       .then((response) => {
         if (response.idPartido) {
-          alert("Actualización exitosa.")
+          alert("Actualización exitosa del resultado.");
+          checkResultado(matchDTO);
           cleanUpdate();
         } else {
-          alert("Error desconocido en la actualización. Pruebe con reescribir los valores.")
+          alert("Error desconocido en la actualización. Pruebe con reescribir los valores.");
         }
       })
     } else {
       alert("Valores faltantes para la actualización.");
     }
+  };
+
+  const checkResultado = (matchDTO) => {
+    postWithResponseManage('/prediccion/checkResultado', matchDTO)
+    .then(() => {
+      alert("Actualización exitosa de las predicciones.");
+    })
   }
 
   const handleDelete = async () => {
@@ -209,19 +216,19 @@ const MatchCRUD = () => {
             return `${match?.equipos.at(0)?.equipo.nombre} Vs. ${match?.equipos.at(1)?.equipo.nombre} - ${formatDate(match.fecha)}`
           }}
           sx={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="estadio*" />}
+          renderInput={(params) => <TextField {...params} label="partido" />}
           onChange={(event, newValue) => {handleSelectUpdate(newValue)}}
         />
         { matchUpdate ?
-          <Box sx={{display:'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <TextField variant="outlined" fullWidth type="number" sx={{marginBottom: '1rem'}}
-              value={team1Update?.resultado}
-              label={`Resultado ${team1Update?.nombre}*`}
+          <Box sx={{display:'flex', flexDirection: 'row', justifyContent: 'space-evenly', width: '100%'}}>
+            <TextField variant="outlined" type="number" sx={{marginBottom: '1rem', width: '7rem'}}
+              value={team1Update.resultado ? team1Update.resultado : "" }
+              label={team1Update.equipo ? team1Update.equipo.nombre : ""}
               onChange={(event) => {setTeam1Update({...team1Update, resultado: parseInt(event.target.value)})}} 
             />
-            <TextField variant="outlined" fullWidth type="number" sx={{marginBottom: '1rem'}}
-              value={team2Update?.resultado}
-              label={`Resultado ${team2Update?.nombre}*`}
+            <TextField variant="outlined" type="number" sx={{marginBottom: '1rem', width: '7rem'}}
+              value={team2Update.resultado ? team2Update.resultado : ""}
+              label={team2Update.equipo ? team2Update.equipo.nombre : ""}
               onChange={(event) => {setTeam2Update({...team2Update, resultado: parseInt(event.target.value)})}} 
             />
           </Box>
@@ -242,7 +249,7 @@ const MatchCRUD = () => {
             return `${match?.equipos.at(0)?.equipo.nombre} Vs. ${match?.equipos.at(1)?.equipo.nombre} - ${formatDate(match.fecha)}`
           }}
           sx={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="estadio*" />}
+          renderInput={(params) => <TextField {...params} label="partido" />}
           onChange={(event, newValue) => {setIdDelete(newValue.idPartido)}}
         />
         <Button type="delete" variant="contained" onClick={handleDelete}> Eliminar </Button>
