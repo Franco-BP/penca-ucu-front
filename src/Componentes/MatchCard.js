@@ -28,9 +28,9 @@ const MatchCard = ({ partido }) => {
       display: 'flex', flexDirection: 'column', width: '25rem', height: '10rem',
       justifyContent: 'space-between', border: '2px solid ', borderColor: '#1C285E', borderRadius: '2rem'
     }}>
-      <CardActionArea onClick={handleIngresarClick} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', paddingY: '0.5rem', borderBottomRightRadius: 0, borderBottomLeftRadius: 0 }}
+      <CardActionArea onClick={handleIngresarClick} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', paddingY: '0.5rem', borderBottomRightRadius: 0, borderBottomLeftRadius: 0 }}
       >
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: '40%', textAlign: 'center', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center' }}>
           <CardMedia
             sx={{ width: '5rem', height: '5rem' }}
             component="img"
@@ -39,8 +39,8 @@ const MatchCard = ({ partido }) => {
           />
           <Typography sx={{ marginY: '0.5rem'}}>{team1.nombre}</Typography>
         </Box>
-        <Button variant="contained" sx={{ backgroundColor: '#1C285E', color: 'white', borderRadius: '1rem', width: '20%' }}>Ingresar</Button>
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: '40%', textAlign: 'center', alignItems: 'center' }}>
+        <Button variant="contained" sx={{ backgroundColor: '#1C285E', color: 'white', borderRadius: '1rem'}}>Ingresar</Button>
+        <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center' }}>
           <CardMedia
             sx={{ width: '5rem', height: '5rem' }}
             component="img"
