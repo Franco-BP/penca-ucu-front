@@ -11,7 +11,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import LogoPenca from '../assets/PencaUCU.png';
 import ImagenAvatar from '../assets/78000335.png';
 import { Button } from '@mui/material';
-import { PencaUCUContext } from '../context/context';
+import { PencaUCUContext, accionUserLogout } from '../context/context';
 import { useNavigate } from 'react-router-dom';
 
 const CustomAppBar = styled(AppBar)({
@@ -46,7 +46,7 @@ const CustomAvatar = styled(Avatar)({
 const TopBar = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElHamburger, setAnchorElHamburger] = useState(null);
-  const navigate = useNavigate(); // Hook de navegación
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -64,9 +64,11 @@ const TopBar = () => {
     setAnchorElHamburger(null);
   };
 
-  const { data } = useContext(PencaUCUContext);
-  const usuario = data.usuarioData;
+  const { data, dispatch } = useContext(PencaUCUContext);
+  const usuario = data.userData;
 
+  console.log(usuario);
+  
   const navItems = ['Resultados', 'Reglas de juego'];
 
   const theme = useTheme();
@@ -75,6 +77,12 @@ const TopBar = () => {
   const handleNavItemClick = (item) => {
     const path = `/${item.toLowerCase().replace(/ /g, '')}`;
     navigate(path);
+  };
+
+  const handleLogout = () => {
+    dispatch(accionUserLogout); // Cambia el estado de usuario a null
+    handleCloseUserMenu();
+    navigate('/');
   };
 
   return (
@@ -101,9 +109,16 @@ const TopBar = () => {
             <MenuIcon />
           </IconButton>
         )}
-        <IconButton edge="end" color="inherit" onClick={handleOpenUserMenu} sx={{ marginLeft: 'auto' }}>
-          <CustomAvatar alt="User Avatar" src={ImagenAvatar} />
-        </IconButton>
+        {usuario === undefined || usuario === null ? (
+          <>
+            <Button color="inherit" onClick={() => navigate('/iniciar')}>Login</Button>
+            <Button color="inherit" onClick={() => navigate('/registrarse')}>Register</Button>
+          </>
+        ) : (
+          <IconButton edge="end" color="inherit" onClick={handleOpenUserMenu} sx={{ marginLeft: 'auto' }}>
+            <CustomAvatar alt="User Avatar" src={ImagenAvatar} />
+          </IconButton>
+        )}
         <Menu
           id="menu-user"
           anchorEl={anchorElUser}
@@ -125,7 +140,7 @@ const TopBar = () => {
           <MenuItem onClick={handleCloseUserMenu} component="a" href="/cuenta">
             Cuenta
           </MenuItem>
-          <MenuItem onClick={handleCloseUserMenu} component="a" href="/cerrarsesion">
+          <MenuItem onClick={handleLogout}>
             Cerrar sesión
           </MenuItem>
         </Menu>
