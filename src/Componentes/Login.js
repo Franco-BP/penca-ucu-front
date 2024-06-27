@@ -32,10 +32,9 @@ export default function FormPropsTextFields() {
     }
     postWithResponseManage('/usuario/login', loginDetails)
         .then((response) => {
-            dispatch(accionAddUsuario(response))
             if (response.idUsuario) {
+                dispatch(accionAddUsuario(response))
                 navigate('/home');
-                console.log(response);
             }
             else {
                 alert('Usuario o contraseña incorrectos');
