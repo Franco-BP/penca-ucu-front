@@ -1,4 +1,4 @@
-function formatDate(fechaString) {
+function FormatDate(fechaString) {
   const fecha = new Date(fechaString);
   const diaSemana = fecha.getDay();
   const diaMes = fecha.getDate();
@@ -16,4 +16,4 @@ function formatDate(fechaString) {
   return fechaFormateada;
 }
 
-export default formatDate;
+export default FormatDate;

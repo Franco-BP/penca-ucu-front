@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardActionArea, CardMedia, Box, Typography, Button } from '@mui/material';
-import formatDate from '../utils/formatDate';
+import FormatDate from '../utils/FormatDate';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -53,7 +53,7 @@ const MatchCard = ({ partido }) => {
         </Box>
       </CardActionArea>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-        <Typography align='center'>{formatDate(partido.fecha)}</Typography>
+        <Typography align='center'>{FormatDate(partido.fecha)}</Typography>
       </Box>
     </Card>
   );

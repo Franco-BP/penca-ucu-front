@@ -3,7 +3,7 @@ import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import React, { useState, useEffect } from 'react'
 import { deleteWithoutResponseManage, getWithResponseManage, postWithResponseManage, putWithResponseManage } from '../../../services/PencaUCUservices';
-import formatDate from '../../../utils/formatDate';
+import FormatDate from '../../../utils/FormatDate';
 
 const MatchCRUD = () => {
 
@@ -197,7 +197,7 @@ const MatchCRUD = () => {
           id="match-update"
           options={matchesList}
           getOptionLabel={(match) => {
-            return `${match?.equipos.at(0)?.equipo.nombre} vs. ${match?.equipos.at(1)?.equipo.nombre} - ${formatDate(match.fecha)}`
+            return `${match?.equipos.at(0)?.equipo.nombre} vs. ${match?.equipos.at(1)?.equipo.nombre} - ${FormatDate(match.fecha)}`
           }}
           sx={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="partido" />}
@@ -230,7 +230,7 @@ const MatchCRUD = () => {
           id="match-delete"
           options={matchesList}
           getOptionLabel={(match) => {
-            return `${match?.equipos.at(0)?.equipo.nombre} vs. ${match?.equipos.at(1)?.equipo.nombre}  \n${formatDate(match.fecha)}`
+            return `${match?.equipos.at(0)?.equipo.nombre} vs. ${match?.equipos.at(1)?.equipo.nombre}  \n${FormatDate(match.fecha)}`
           }}
           sx={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="partido" />}
