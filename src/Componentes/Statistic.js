@@ -4,6 +4,9 @@ import { TooltipComponent, LegendComponent } from 'echarts/components';
 import { PieChart } from 'echarts/charts';
 import { LabelLayout } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
+import { PencaUCUContext, accionGetEstadisticaData } from '../context/context';
+import { getWithResponseManage } from '../services/PencaUCUservices';
+import { useContext,useState } from 'react';
 
 // Registrar los componentes de ECharts
 echarts.use([
@@ -16,10 +19,27 @@ echarts.use([
 
 const Statistic = () => {
   const chartRef = useRef(null);
+  const {data, dispatch } = useContext(PencaUCUContext);
+  const [rows, setRows] = useState([]);
+
+  const estadistica= data.estadisticaData;
+  const selectedPartido=data.selectedPartido;
 
   useEffect(() => {
+   const statisticDataResponse = getWithResponseManage(`/prediccion/getEstadistica/${selectedPartido.idPartido}`)
+    
     const chartDom = chartRef.current;
     const myChart = echarts.init(chartDom);
+
+    const estadisticData = statisticDataResponse;
+    
+    const statiticData = {
+      empate: estadisticData.empate,
+      equipo1: estadisticData.equipo1,
+      equpo2: estadisticData.equipo2,
+
+  };
+
 
     const option = {
       tooltip: {
@@ -38,13 +58,9 @@ const Statistic = () => {
           // Ajustar el ángulo de inicio y fin
           startAngle: 180,
           endAngle: 360,
-          data: [
-            { value: 1048, name: 'Search Engine' },
-            { value: 735, name: 'Direct' },
-            { value: 580, name: 'Email' },
-            { value: 484, name: 'Union Ads' },
-            { value: 300, name: 'Video Ads' }
-          ]
+          data: statiticData
+            
+          
         }
       ]
     };
