@@ -17,18 +17,25 @@ export default function FormPropsTextFields() {
 
     const { data, dispatch } = useContext(PencaUCUContext);
     const carreraData = data.carreraData;
+    const [torneosData, setTorneosData] = useState([]);
 
     useEffect(() => {
-        
-        getWithResponseManage('/carrera/getAll')
-            .then((response) => {
-                dispatch(accionGetCarreraData(response));
-                if(response[0] != undefined){
-                  if(response[0].idCarrera){
-                      setIdCarrera(1);
-                  }
+      getWithResponseManage('/carrera/getAll')
+          .then((response) => {
+              dispatch(accionGetCarreraData(response));
+              if(response[0] != undefined){
+                if(response[0].idCarrera){
+                    setIdCarrera(1);
                 }
-            })
+              }
+          })
+
+      getWithResponseManage('/torneo/getAll')
+          .then((response) => {
+            if(response[0] != undefined){
+              setTorneosData(response);
+            }
+          })
     }, []);
 
     const navigate = useNavigate();
@@ -38,6 +45,7 @@ export default function FormPropsTextFields() {
   const [nombre, setNombre] = useState(null);
   const [apellido, setApellido] = useState(null);
   const [idCarrera, setIdCarrera] = useState(null);
+  const [idTorneo, setIdTorneo] = useState(null);
 
 
   const handleEmailChange = (event) => {
@@ -62,25 +70,27 @@ export default function FormPropsTextFields() {
   const handleIdCarreraChange = (event) => {
       setIdCarrera(event.target.value);
   };
+  const handleIdTorneoChange = (event) => {
+      setIdTorneo(event.target.value);
+  };
     
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const carrera = {idCarrera};
     const registerDetails = { email, contrasenia, nombre, apellido, carrera};
-    if (!email || !contrasenia || !nombre || !apellido || !idCarrera) {
+    if (!email || !contrasenia || !nombre || !apellido || !idCarrera || !idTorneo) {
         alert('Por favor complete todos los campos');
         return;
       }
     postWithResponseManage('/usuario/create', registerDetails)
         .then((response) => {
-            console.log(registerDetails)
             dispatch(accionAddUsuario(response))
             if (response.idUsuario) {
-                console.log(response)
                 navigate('/home');
             }
         })
+    // FALTA CREAR LA RELACION DEL USUARIO CON EL TORNEO
   };
 
   return (
@@ -150,6 +160,23 @@ export default function FormPropsTextFields() {
                 {carreraData?.map((carrera) => {
                     return (
                         <option key={carrera.idCarrera} value={carrera.idCarrera}>{carrera.nombre}</option>
+                    )
+                })}
+            </NativeSelect>
+            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                Torneo
+            </InputLabel>
+            <NativeSelect
+                inputProps={{
+                name: 'Torneo',
+                id: 'uncontrolled-native',
+                }}
+                onChange={handleIdTorneoChange}
+                defaultValue={1}
+            >
+                {torneosData?.map((torneo) => {
+                    return (
+                        <option key={torneo.idTorneo} value={torneo.idTorneo}>{torneo.nombre}</option>
                     )
                 })}
             </NativeSelect>
@@ -230,6 +257,23 @@ export default function FormPropsTextFields() {
                   )
               })}
           </NativeSelect>
+          <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                Torneo
+            </InputLabel>
+            <NativeSelect
+                inputProps={{
+                name: 'Torneo',
+                id: 'uncontrolled-native',
+                }}
+                onChange={handleIdTorneoChange}
+                defaultValue={1}
+            >
+                {torneosData?.map((torneo) => {
+                    return (
+                        <option key={torneo.idTorneo} value={torneo.idTorneo}>{torneo.nombre}</option>
+                    )
+                })}
+            </NativeSelect>
         </Grid>
         <Grid
           style={{display: 'flex', justifyContent: 'center', marginTop: '1rem', marginBottom: '2rem'}}

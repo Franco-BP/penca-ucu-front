@@ -1,11 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { postWithResponseManage } from '../services/PencaUCUservices';
 import { accionAddUsuario, PencaUCUContext } from '../context/context';
 import { useNavigate } from 'react-router-dom';
-import { wait } from '@testing-library/user-event/dist/utils';
 
 export default function FormPropsTextFields() {
 
@@ -39,10 +38,16 @@ export default function FormPropsTextFields() {
                 console.log(response);
             }
             else {
-                alert('Usuario o contrasenia incorrectos');
+                alert('Usuario o contraseña incorrectos');
             }
         })
   };
+
+  useEffect(() => {
+    if ( usuario?.idUsuario ) {
+      navigate('/home');
+    }
+  }, [])
 
   return (
     <Box
