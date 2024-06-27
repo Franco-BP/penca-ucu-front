@@ -23,8 +23,8 @@ export default function FormPropsTextFields() {
     useEffect(() => {
       getWithResponseManage('/carrera/getAll')
           .then((response) => {
-              dispatch(accionGetCarreraData(response));
-              if(response[0] != undefined){
+            if(response[0]){
+                dispatch(accionGetCarreraData(response));
                 if(response[0].idCarrera){
                     setIdCarrera(1);
                 }
@@ -35,6 +35,9 @@ export default function FormPropsTextFields() {
           .then((response) => {
             if(response[0]){
               setTorneosData(response);
+              if(response[0].idTorneo){
+                setIdTorneo(1);
+              }
             }
           })
 
@@ -42,6 +45,10 @@ export default function FormPropsTextFields() {
           .then((response) => {
             if(response[0]){
               setEquiposData(response);
+              if(response[0].idEquipo){
+                setIdCampeon(1);
+                setIdSubcampeon(1);
+              }
             }
           })
     }, []);
@@ -81,7 +88,7 @@ export default function FormPropsTextFields() {
       setIdCarrera(event.target.value);
   };
   const handleIdTorneoChange = (event) => {
-      setIdTorneo(event.target.value);
+    console.log(event.target.value);
   };
   const handleIdCampeonChange = (event) => {
       setIdCampeon(event.target.value);
@@ -97,16 +104,25 @@ export default function FormPropsTextFields() {
     const registerDetails = { email, contrasenia, nombre, apellido, carrera};
     if (!email) {
       alert("Correo invalido.\nFormato necesario: 'ejemplo@ejemplo.ucu.edu.uy'.");
+      return;
     };
     if (!contrasenia || !nombre || !apellido || !idCarrera || !idTorneo || !idCampeon || !idSubcampeon) {
       alert('Por favor complete todos los campos');
+      console.log(registerDetails);
+      console.log(idTorneo, idCampeon, idSubcampeon)
+      return;
+    }
+    if (idCampeon === idSubcampeon) {
+      alert('El campeon y el subcampeon no pueden ser el mismo equipo.');
+      console.log(registerDetails);
+      console.log(idTorneo, idCampeon, idSubcampeon);
       return;
     }
     postWithResponseManage('/usuario/create', registerDetails)
         .then((response) => {
           if (response.idUsuario) {
             dispatch(accionAddUsuario(response))
-            const torneoUsuarioDetails = { usuario: {idUsuario: response.idUsuario}, torneo: {idTorneo: idTorneo}, campeon: {idEquipo: idCampeon}, subcampeon: {idEquipo: idSubcampeon}}
+            const torneoUsuarioDetails = { usuario: {idUsuario: response.idUsuario}, torneo: {idTorneo: idTorneo}, campeon: {idEquipo: idCampeon}, subcampeon: {idEquipo: idSubcampeon}, puntos: 0}
             postWithResponseManage('/torneoUsuario/create', torneoUsuarioDetails)
             .then((response) => {
               if (response.usuario.idUsuario) {
@@ -164,13 +180,13 @@ export default function FormPropsTextFields() {
               type="text"
               onChange={handleApellidoChange}
           />
-          <InputLabel variant="standard" htmlFor="uncontrolled-native">
+          <InputLabel variant="standard" htmlFor="carrera-native">
               Carrera
           </InputLabel>
           <NativeSelect
               inputProps={{
               name: 'Carrera',
-              id: 'uncontrolled-native',
+              id: 'carrera-native',
               }}
               onChange={handleIdCarreraChange}
               defaultValue={1}
@@ -178,36 +194,36 @@ export default function FormPropsTextFields() {
           >
               {carreraData?.map((carrera) => {
                   return (
-                      <option key={carrera.idCarrera} value={carrera.idCarrera}>{carrera.nombre}</option>
+                      <option key={carrera.nombre} value={carrera.idCarrera}>{carrera.nombre}</option>
                   )
               })}
           </NativeSelect>
-          <InputLabel variant="standard" htmlFor="uncontrolled-native">
+          <InputLabel variant="standard" htmlFor="torneo-native">
               Torneo
           </InputLabel>
           <NativeSelect
               inputProps={{
               name: 'Torneo',
-              id: 'uncontrolled-native',
+              id: 'torneo-native',
               }}
               onChange={handleIdTorneoChange}
-              defaultValue={1}
+              defaultValue={0}
           >
               {torneosData?.map((torneo) => {
                   return (
-                      <option key={torneo.idTorneo} value={torneo.idTorneo}>{torneo.nombre}</option>
+                      <option key={torneo.nombre} value={torneo.idTorneo}>{torneo.nombre}</option>
                   )
               })}
           </NativeSelect>
           {idTorneo && (
             <>
-            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+            <InputLabel variant="standard" htmlFor="campeon-native">
             Campeon
             </InputLabel>
             <NativeSelect
                 inputProps={{
                 name: 'Torneo',
-                id: 'uncontrolled-native',
+                id: 'campeon-native',
                 }}
                 onChange={handleIdCampeonChange}
                 defaultValue={1}
@@ -218,13 +234,13 @@ export default function FormPropsTextFields() {
                     )
                 })}
             </NativeSelect>
-            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+            <InputLabel variant="standard" htmlFor="subcampeon-native">
             Subcampeon
             </InputLabel>
             <NativeSelect
                 inputProps={{
                 name: 'Torneo',
-                id: 'uncontrolled-native',
+                id: 'subcampeon-native',
                 }}
                 onChange={handleIdSubcampeonChange}
                 defaultValue={1}
@@ -295,13 +311,13 @@ export default function FormPropsTextFields() {
               type="text"
               onChange={handleApellidoChange}
           />
-          <InputLabel variant="standard" htmlFor="uncontrolled-native">
+          <InputLabel variant="standard" htmlFor="carrera-native">
               Carrera
           </InputLabel>
           <NativeSelect
               inputProps={{
               name: 'Carrera',
-              id: 'uncontrolled-native',
+              id: 'carrera-native',
               }}
               onChange={handleIdCarreraChange}
               defaultValue={1}
@@ -312,13 +328,13 @@ export default function FormPropsTextFields() {
                   )
               })}
           </NativeSelect>
-          <InputLabel variant="standard" htmlFor="uncontrolled-native">
+          <InputLabel variant="standard" htmlFor="torneo-native">
                 Torneo
           </InputLabel>
           <NativeSelect
               inputProps={{
               name: 'Torneo',
-              id: 'uncontrolled-native',
+              id: 'torneo-native',
               }}
               onChange={handleIdTorneoChange}
               defaultValue={1}
@@ -331,13 +347,13 @@ export default function FormPropsTextFields() {
           </NativeSelect>
           {idTorneo && (
             <>
-            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+            <InputLabel variant="standard" htmlFor="campeon-native">
             Campeon
             </InputLabel>
             <NativeSelect
                 inputProps={{
                 name: 'Torneo',
-                id: 'uncontrolled-native',
+                id: 'campeon-native',
                 }}
                 onChange={handleIdCampeonChange}
                 defaultValue={1}
@@ -348,13 +364,13 @@ export default function FormPropsTextFields() {
                     )
                 })}
             </NativeSelect>
-            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+            <InputLabel variant="standard" htmlFor="subcampeon-native">
             Subcampeon
             </InputLabel>
             <NativeSelect
                 inputProps={{
                 name: 'Torneo',
-                id: 'uncontrolled-native',
+                id: 'subcampeon-native',
                 }}
                 onChange={handleIdSubcampeonChange}
                 defaultValue={1}
