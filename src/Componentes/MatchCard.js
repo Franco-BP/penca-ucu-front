@@ -1,9 +1,19 @@
 import React from 'react';
 import { Card, CardActionArea, CardMedia, Box, Typography, Button } from '@mui/material';
 import formatDate from '../utils/formatDate';
+import { useNavigate } from 'react-router-dom';
+
 
 const MatchCard = ({ partido }) => {
+  const navigate = useNavigate();
   if (!partido || !partido.equipos || partido.equipos.length < 2) return null; // si no hay partidos no los muestra
+
+  
+
+  const handleIngresarClick = () => {
+
+    navigate(`/prediccion`); // Navega a la página de predicción con el ID del partido
+  };
 
   const team1 = partido.equipos[0].equipo;
   console.log(team1.imgBandera)
@@ -31,7 +41,7 @@ const MatchCard = ({ partido }) => {
           />
           <Typography sx={{ marginY: '0.5rem' }}>{team1.nombre}</Typography>
         </Box>
-        <Button variant="contained" sx={{ backgroundColor: '#1C285E', color: 'white', borderRadius: '1rem' }}>Ingresar</Button>
+        <Button variant="contained" sx={{ backgroundColor: '#1C285E', color: 'white', borderRadius: '1rem'  }}onClick={handleIngresarClick}>Ingresar</Button>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <CardMedia
             sx={{ width: '5rem', height: '5rem' }}

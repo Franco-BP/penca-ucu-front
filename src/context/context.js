@@ -4,7 +4,7 @@ export const PencaUCUContext = createContext();
 
 export const initialState = {
   torneoData: null,
-  userData: null,
+  usuarioData: null,
   carreraData: null,
   partidoData: null,
   futurePartidoData: null,
@@ -19,10 +19,10 @@ export const accionGetCarreraData = (carrera) => {
   };
 };
 
-export const accionAddUser = (user) => {
+export const accionAddUsuario = (usuario) => {
   return {
-    type: 'ADD_USER',
-    payload: user,
+    type: 'ADD_USUARIO',
+    payload: usuario,
   };
 };
 
@@ -80,8 +80,8 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'GET_TORNEO_DATA':
       return { ...state, torneoData: action.payload };
-    case 'ADD_USER':
-      return { ...state, userData: action.payload };
+    case 'ADD_USUARIO':
+      return { ...state, usuarioData: action.payload };
     case 'GET_CARRERA_DATA':
       return { ...state, carreraData: action.payload };
     case 'GET_PARTIDO_DATA':
