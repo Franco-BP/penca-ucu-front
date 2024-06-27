@@ -10,6 +10,7 @@ export const initialState = {
   futurePartidoData: null,
   prediccionData: null,
   selectedPartido: null,
+  statisticData: null
 };
 
 export const accionGetCarreraData = (carrera) => {
@@ -75,6 +76,13 @@ export const accionSetSelectedPartido = (partido) => {
   };
 };
 
+export const accionGetStatisticData = (statistic) => {
+  return {
+    type: 'GET_STATISTIC_DATA',
+    payload: statistic,
+  };
+}
+
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -96,6 +104,8 @@ const reducer = (state, action) => {
       return { ...state, prediccionData: action.payload };
     case 'SET_SELECTED_PARTIDO':
       return { ...state, selectedPartido: action.payload };
+    case 'GET_STATISTIC_DATA':
+      return { ...state, statisticData: action.payload };
     default:
       return state;
   }
