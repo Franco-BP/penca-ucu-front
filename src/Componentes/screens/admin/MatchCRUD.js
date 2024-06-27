@@ -1,5 +1,5 @@
 import { Autocomplete, Box, Button, Grid, TextField, Typography } from '@mui/material';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import React, { useState, useEffect } from 'react'
 import { deleteWithoutResponseManage, getWithResponseManage, postWithResponseManage, putWithResponseManage } from '../../../services/PencaUCUservices';
@@ -64,20 +64,6 @@ const MatchCRUD = () => {
     };
   };
 
-  const cleanCreate = () => {
-    setDateCreate(null);
-    setStadiumCreate(null);
-    setTourneyCreate(null);
-    setTeam1Create(null);
-    setTeam2Create(null);
-  };
-
-  const cleanUpdate = () => {
-    setMatchUpdate(null);
-    setTeam1Update(null);
-    setTeam2Update(null);
-  };
-
   const handleSelectUpdate = (newValue) => {
     setMatchUpdate(newValue);
     if (newValue.equipos.at(0).tipoEquipo === 1) {
@@ -96,10 +82,9 @@ const MatchCRUD = () => {
     }))
       .then((response) => {
         if (response.idPartido) {
-          alert("Creación exitosa.")
-          cleanCreate();
+          alert("Creación exitosa.");
         } else {
-          alert("Error desconocido en la creación.")
+          alert("Error desconocido en la creación.");
         }
       })
     } else {
@@ -115,7 +100,6 @@ const MatchCRUD = () => {
         if (response.idPartido) {
           alert("Actualización exitosa del resultado.");
           checkResultado(matchDTO);
-          cleanUpdate();
         } else {
           alert("Error desconocido en la actualización. Pruebe con reescribir los valores.");
         }
@@ -155,7 +139,7 @@ const MatchCRUD = () => {
           Crear Partido
         </Typography>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker label="fecha*" onChange={setDateCreate} sx={{marginBottom: '1rem'}}/>
+          <DateTimePicker label="fecha y hora*" onChange={setDateCreate} sx={{marginBottom: '1rem'}}/>
         </LocalizationProvider>
         <Autocomplete
           disablePortal
@@ -213,7 +197,7 @@ const MatchCRUD = () => {
           id="match-update"
           options={matchesList}
           getOptionLabel={(match) => {
-            return `${match?.equipos.at(0)?.equipo.nombre} Vs. ${match?.equipos.at(1)?.equipo.nombre} - ${formatDate(match.fecha)}`
+            return `${match?.equipos.at(0)?.equipo.nombre} vs. ${match?.equipos.at(1)?.equipo.nombre} - ${formatDate(match.fecha)}`
           }}
           sx={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="partido" />}
@@ -246,7 +230,7 @@ const MatchCRUD = () => {
           id="match-delete"
           options={matchesList}
           getOptionLabel={(match) => {
-            return `${match?.equipos.at(0)?.equipo.nombre} Vs. ${match?.equipos.at(1)?.equipo.nombre} - ${formatDate(match.fecha)}`
+            return `${match?.equipos.at(0)?.equipo.nombre} vs. ${match?.equipos.at(1)?.equipo.nombre}  \n${formatDate(match.fecha)}`
           }}
           sx={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="partido" />}
