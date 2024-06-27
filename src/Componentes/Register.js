@@ -88,7 +88,7 @@ export default function FormPropsTextFields() {
       setIdCarrera(event.target.value);
   };
   const handleIdTorneoChange = (event) => {
-    console.log(event.target.value);
+      setIdTorneo(event.target.value);
   };
   const handleIdCampeonChange = (event) => {
       setIdCampeon(event.target.value);
@@ -108,14 +108,10 @@ export default function FormPropsTextFields() {
     };
     if (!contrasenia || !nombre || !apellido || !idCarrera || !idTorneo || !idCampeon || !idSubcampeon) {
       alert('Por favor complete todos los campos');
-      console.log(registerDetails);
-      console.log(idTorneo, idCampeon, idSubcampeon)
       return;
     }
     if (idCampeon === idSubcampeon) {
       alert('El campeon y el subcampeon no pueden ser el mismo equipo.');
-      console.log(registerDetails);
-      console.log(idTorneo, idCampeon, idSubcampeon);
       return;
     }
     postWithResponseManage('/usuario/create', registerDetails)
