@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { PencaUCUContext, accionGetPartidoData } from '../context/context';
 import { getWithResponseManage } from '../services/PencaUCUservices';
-import formatDate from '../utils/formatDate';
+import FormatDate from '../utils/FormatDate';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -70,7 +70,7 @@ export default function Results() {
                 }
                 return {
                     id: partido.idPartido,
-                    fechaYHora: formatDate(partido.fecha),
+                    fechaYHora: FormatDate(partido.fecha),
                     team1: {
                         nombre: partido.equipos[0].equipo.nombre,
                         imgBandera: partido.equipos[0].equipo.imgBandera,
