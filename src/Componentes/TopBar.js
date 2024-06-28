@@ -86,7 +86,7 @@ const TopBar = () => {
   return (
     <CustomAppBar position="static" className="CustomAppBar">
       <Toolbar>
-        <LogoButton component="a" href="/">
+        <LogoButton component="a" onClick={() => navigate('/')}>
           <LogoImage src={LogoPenca} alt="logo" />
         </LogoButton>
         {!isMobile && (
@@ -110,7 +110,7 @@ const TopBar = () => {
         {usuario === undefined || usuario === null ? (
           <>
             <Button color="inherit" onClick={() => navigate('/iniciar')}>Login</Button>
-            <Button color="inherit" onClick={() => navigate('/registrarse')}>Register</Button>
+            <Button color="inherit" onClick={() => navigate('/perfil')}>Register</Button>
           </>
         ) : (
           <IconButton edge="end" color="inherit" onClick={handleOpenUserMenu} sx={{ marginLeft: 'auto' }}>
