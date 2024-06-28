@@ -113,7 +113,7 @@ const TopBar = () => {
         {usuario === undefined || usuario === null ? (
           <>
             <Button color="inherit" onClick={() => navigate('/iniciar')}>Login</Button>
-            <Button color="inherit" onClick={() => navigate('/perfil')}>Register</Button>
+            <Button color="inherit" onClick={() => navigate('/registrarse')}>Register</Button>
           </>
         ) : (
           <IconButton edge="end" color="inherit" onClick={handleOpenUserMenu} sx={{ marginLeft: 'auto' }}>
