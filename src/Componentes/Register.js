@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/system';
 import { postWithResponseManage, getWithResponseManage } from '../services/PencaUCUservices';
-import { accionGetCarreraData, PencaUCUContext, accionAddUsuario } from '../context/context';
+import { accionGetCarreraData, PencaUCUContext, accionAddUsuario } from '../context/Context';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from '@mui/material';
 import { NativeSelect, InputLabel } from '@mui/material';

@@ -4,7 +4,7 @@ import { TooltipComponent, LegendComponent } from 'echarts/components';
 import { PieChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import { LabelLayout } from 'echarts/features';
-import { PencaUCUContext, accionGetStatisticData } from '../context/context';
+import { PencaUCUContext, accionGetStatisticData } from '../context/Context';
 import { getWithResponseManage } from '../services/PencaUCUservices';
 
 // Registrar los componentes de ECharts
