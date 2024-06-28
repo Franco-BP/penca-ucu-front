@@ -5,6 +5,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import { Button, Grid, Link, useMediaQuery, useTheme } from "@mui/material";
 import LogoPenca from '../assets/PencaUCU.png';
 import { styled } from '@mui/system';
+import { useNavigate } from "react-router-dom";
 
 const buttonStyle = { color: 'white', fontSize: '1.2rem' }; // Reduced font size for icons
 const paraffoStyle = { color: 'white', fontSize: '0.6rem', fontFamily: 'revert', marginBottom: '4px' }; // Adjusted margin
@@ -15,6 +16,7 @@ const LogoImage = styled('img')({
 });
 
 const Footer = () => {
+    const navigate = useNavigate();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -36,7 +38,7 @@ const Footer = () => {
             {!isMobile && (
                 <Grid item>
                     <Grid container justifyContent="center" alignItems="center" spacing={1}>
-                        <Button component="a" href="/">
+                        <Button component="a" onClick={() => {navigate('/')}}>
                             <LogoImage src={LogoPenca} alt="logo" />
                         </Button>
                     </Grid>

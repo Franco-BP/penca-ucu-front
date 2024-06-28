@@ -1,19 +1,23 @@
-import React from 'react';
-import { Card, CardActionArea, CardMedia, Box, Typography, Button } from '@mui/material';
+import React, { useContext } from 'react';
+import { Card, CardActionArea, CardMedia, Box, Typography } from '@mui/material';
 import FormatDate from '../utils/FormatDate';
 import { useNavigate } from 'react-router-dom';
+import { PencaUCUContext } from '../context/Context';
 
 
 const MatchCard = ({ partido }) => {
+  const { data } = useContext(PencaUCUContext);
   const navigate = useNavigate();
   if (!partido || !partido.equipos || partido.equipos.length < 2) return null; // si no hay partidos no los muestra
 
-
-
   const handleIngresarClick = () => {
-
-    navigate(`/prediccion`); // Navega a la página de predicción con el ID del partido
-  };
+    if (data.usuarioData === null) {
+      return alert("Debe loguearse para poder ingresar a la penca");
+    }
+    else {
+      navigate('/prediccion');
+    }
+  }
 
   const team1 = partido.equipos[0].equipo;
 

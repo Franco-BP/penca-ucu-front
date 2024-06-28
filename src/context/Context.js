@@ -91,6 +91,7 @@ export const accionUserLogout = () => {
 }
 
 
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'GET_TORNEO_DATA':
@@ -102,22 +103,24 @@ const reducer = (state, action) => {
     case 'GET_PARTIDO_DATA':
       return { ...state, partidoData: action.payload };
     case 'GET_FUTURE_PARTIDO_DATA':
-      return { ...state, partidoData: action.payload };
+      return { ...state, futurePartidoData: action.payload };
     case 'GET_PREDICCION_DATA':
       return { ...state, prediccionData: action.payload };
     case 'GET_USUARIO_DATA':
-      return { ...state, userData: action.payload };
+      return { ...state, usuarioData: action.payload };
     case 'POST_PREDICCION_DATA':
       return { ...state, prediccionData: action.payload };
     case 'SET_SELECTED_PARTIDO':
       return { ...state, selectedPartido: action.payload };
+    case 'USER_LOGOUT':
+      return { ...state, usuarioData: null };
     default:
       return state;
   }
 };
 
 export const ProviderPencaUCUContext = ({ children }) => {
-  const [data, dispatch] = useReducer(reducer, []);
+  const [data, dispatch] = useReducer(reducer, initialState);
 
   return (
     <PencaUCUContext.Provider value={{ data, dispatch }}>

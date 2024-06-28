@@ -98,7 +98,7 @@ const columns = [
 ];
 
 const UserPredictions = () => {
-    const { data, dispatch } = useContext(PencaUCUContext);
+    const { data } = useContext(PencaUCUContext);
 
     const [rows, setRows] = useState([]);
 

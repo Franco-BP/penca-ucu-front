@@ -45,15 +45,8 @@ const AdminScreen = () => {
     setTabValue(newTabValue);
   };
 
-  const { data, dispatch } = useContext(PencaUCUContext);
+  const { data } = useContext(PencaUCUContext);
   const usuario = data.usuarioData;
-  const subtitles = {
-    textAlign: "left",
-    marginTop: "3rem",
-    marginLeft: "5rem",
-    color: "#1C285E",
-    fontFamily: "revert",
-  };
 
   const navigate = useNavigate();
 
@@ -69,12 +62,9 @@ const AdminScreen = () => {
   // };
 
   useEffect(() => {
-    //
-    // Commented for testing reasons
-    //
-    // if (usuario.esAdministrador != true) {
-    //   navigate('/home')
-    // }
+    if (usuario.esAdministrador != true) {
+      navigate('/home')
+    }
   }, []);
 
   return (

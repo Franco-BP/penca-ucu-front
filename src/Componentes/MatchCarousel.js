@@ -1,18 +1,30 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import MatchCard from './MatchCard';
-import { Box, Grid } from '@mui/material';
-import { PencaUCUContext, accionGetPartidoData, accionSetSelectedPartido } from '../context/Context';
+import { Box } from '@mui/material';
+import { PencaUCUContext, accionSetSelectedPartido } from '../context/Context';
 import { getWithResponseManage } from '../services/PencaUCUservices';
 
 const MatchCarousel = () => {
-  const { data, dispatch } = useContext(PencaUCUContext);
+  const { dispatch } = useContext(PencaUCUContext);
   const [groupedMatches, setGroupedMatches] = useState([]);
 
   useEffect(() => {
     getWithResponseManage('/partido/getAll')
       .then((response) => {
-        dispatch(accionGetPartidoData(response));
+        const now = new Date();
+        now.setHours(now.getHours() - 1);
+
+        const futureMatches = response.filter(partido => new Date(partido.fecha) > now);
+        const groupMatches = (matches, groupSize) => {
+          const matchGroups = [];
+          for (let i = 0; i < matches.length; i += groupSize) {
+            matchGroups.push(matches.slice(i, i + groupSize));
+          }
+          return matchGroups;
+        };
+
+        setGroupedMatches(groupMatches(futureMatches, 3));
       })
       .catch(error => console.log(error));
   }, [dispatch]);
@@ -20,21 +32,6 @@ const MatchCarousel = () => {
   const handleSelectPartido = (partido) => {
     dispatch(accionSetSelectedPartido(partido));
   };
-
-
-  useEffect(() => {
-    if (data.partidoData) {
-      const groupMatches = (matches, groupSize) => {
-        const matchGroups = [];
-        for (let i = 0; i < matches.length; i += groupSize) {
-          matchGroups.push(matches.slice(i, i + groupSize));
-        }
-        return matchGroups;
-      };
-
-      setGroupedMatches(groupMatches(data.partidoData, 3));
-    }
-  }, [data.partidoData]);
 
   return (
     <Box sx={{ width: '100%' }}>

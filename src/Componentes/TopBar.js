@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -32,12 +32,6 @@ const LogoImage = styled('img')({
   marginTop: '-200px',
 });
 
-const TitleContainer = styled('div')({
-  flexGrow: 1,
-  display: 'flex',
-  justifyContent: 'space-around',
-});
-
 const CustomAvatar = styled(Avatar)({
   marginLeft: '16px',
   backgroundColor: '#FFFFFF',
@@ -65,10 +59,9 @@ const TopBar = () => {
   };
 
   const { data, dispatch } = useContext(PencaUCUContext);
-  const usuario = data.userData;
-    
-  const navItems = ['Resultados', 'Reglas de juego'];
+  const usuario = data.usuarioData;
 
+  const [navItems, setNavItems] = useState(['Resultados', 'Reglas de juego']);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -77,10 +70,19 @@ const TopBar = () => {
     navigate(path);
   };
 
-  const handleLogout = () => {
-    dispatch(accionUserLogout); // Cambia el estado de usuario a null
+  useEffect(() => {
+    if (usuario?.esAdministrador) {
+      setNavItems([...navItems, 'Administrar']);
+    } else {
+      setNavItems(navItems.filter(item => item !== 'Administrar'));
+    }
+  }, [usuario]);
+
+  const logout = () => {
+    dispatch(accionUserLogout()); // Cambia el estado de usuario a null
+    console.log('Usuario:', usuario);
     handleCloseUserMenu();
-    navigate('/');
+    navigate('/home');
   };
 
   return (
@@ -107,6 +109,7 @@ const TopBar = () => {
             <MenuIcon />
           </IconButton>
         )}
+
         {usuario === undefined || usuario === null ? (
           <>
             <Button color="inherit" onClick={() => navigate('/iniciar')}>Login</Button>
@@ -117,6 +120,7 @@ const TopBar = () => {
             <CustomAvatar alt="User Avatar" src={ImagenAvatar} />
           </IconButton>
         )}
+
         <Menu
           id="menu-user"
           anchorEl={anchorElUser}
@@ -135,10 +139,7 @@ const TopBar = () => {
           <MenuItem onClick={() => navigate("/perfil")} component="a">
             Perfil
           </MenuItem>
-          <MenuItem onClick={handleCloseUserMenu} component="a" href="/cuenta">
-            Cuenta
-          </MenuItem>
-          <MenuItem onClick={handleLogout}>
+          <MenuItem onClick={logout}>
             Cerrar sesión
           </MenuItem>
         </Menu>
