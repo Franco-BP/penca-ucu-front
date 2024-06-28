@@ -1,6 +1,6 @@
 
 import './App.css';
-import { ProviderPencaUCUContext } from './context/context.js';
+import { ProviderPencaUCUContext } from './context/Context.js';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import RulesScreen from './Componentes/screens/RulesScreen.js';
 import HomeScreen from './Componentes/screens/HomeScreen.js';
@@ -9,6 +9,8 @@ import LoginScreen from './Componentes/screens/LoginScreen.js';
 import AdminScreen from './Componentes/screens/admin/AdminScreen.js';
 import PredictionScreen from './Componentes/screens/PredictionScreen.js';
 import ProfileScreen from './Componentes/screens/ProfileScreen.js';
+import ResultsScreen from './Componentes/screens/ResultsScreen.js';
+
 
 function App() {
   return (
@@ -21,8 +23,9 @@ function App() {
           <Route path='administrar' element={<AdminScreen />} />
           <Route path='registrarse' element={<RegisterScreen />} />
           <Route path='iniciar' element={<LoginScreen />} />
-          <Route path='prediccion' element={<PredictionScreen/>}/>
           <Route path='perfil' element={<ProfileScreen/>}/>
+          <Route path='prediccion' element={<PredictionScreen />} />
+          <Route path='resultados' element={<ResultsScreen />} />
         </Routes>
       </ProviderPencaUCUContext>
 

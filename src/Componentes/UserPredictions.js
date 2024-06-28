@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getWithResponseManage } from "../services/PencaUCUservices.js";
-import { PencaUCUContext } from '../context/context.js';
+import { PencaUCUContext } from '../context/Context.js';
 
 const theme = createTheme({
     components: {

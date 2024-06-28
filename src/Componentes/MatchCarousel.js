@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import MatchCard from './MatchCard';
 import { Box, Grid } from '@mui/material';
-import { PencaUCUContext, accionGetPartidoData, accionSetSelectedPartido } from '../context/context';
+import { PencaUCUContext, accionGetPartidoData, accionSetSelectedPartido } from '../context/Context';
 import { getWithResponseManage } from '../services/PencaUCUservices';
 
 const MatchCarousel = () => {

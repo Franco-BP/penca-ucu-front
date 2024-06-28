@@ -1,12 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext, useState } from 'react';
 import * as echarts from 'echarts/core';
 import { TooltipComponent, LegendComponent } from 'echarts/components';
 import { PieChart } from 'echarts/charts';
-import { LabelLayout } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
-import { PencaUCUContext, accionGetEstadisticaData } from '../context/context';
+import { LabelLayout } from 'echarts/features';
+import { PencaUCUContext, accionGetStatisticData } from '../context/Context';
 import { getWithResponseManage } from '../services/PencaUCUservices';
-import { useContext,useState } from 'react';
 
 // Registrar los componentes de ECharts
 echarts.use([
@@ -19,60 +18,72 @@ echarts.use([
 
 const Statistic = () => {
   const chartRef = useRef(null);
-  const {data, dispatch } = useContext(PencaUCUContext);
-  const [rows, setRows] = useState([]);
-
-  const estadistica= data.estadisticaData;
-  const selectedPartido=data.selectedPartido;
+  const { data, dispatch } = useContext(PencaUCUContext);
+  const selectedPartido = data.selectedPartido;
 
   useEffect(() => {
-   const statisticDataResponse = getWithResponseManage(`/prediccion/getEstadistica/${selectedPartido.idPartido}`)
-    
-    const chartDom = chartRef.current;
-    const myChart = echarts.init(chartDom);
+    const fetchData = async () => {
+      if (selectedPartido && selectedPartido.idPartido) {
+        const response = await getWithResponseManage(`/prediccion/getEstadistica/${selectedPartido.idPartido}`);
+        if (response) {
+          dispatch(accionGetStatisticData(response));
 
-    const estadisticData = statisticDataResponse;
-    
-    const statiticData = {
-      empate: estadisticData.empate,
-      equipo1: estadisticData.equipo1,
-      equpo2: estadisticData.equipo2,
+          const chartInstance = echarts.init(chartRef.current);
 
-  };
+          const option = {
+            tooltip: {
+              trigger: 'item',
+              formatter: '{a} <br/>{b}: {c} ({d}%)'
+            },
+            legend: {
+              top: '5%',
+              left: 'center'
+            },
+            series: [
+              {
+                name: 'Partido Stats',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                  borderRadius: 10,
+                  borderColor: '#fff',
+                  borderWidth: 2
+                },
+                label: {
+                  show: false,
+                  position: 'center'
+                },
+                emphasis: {
+                  label: {
+                    show: true,
+                    fontSize: '30',
+                    fontWeight: 'bold'
+                  }
+                },
+                labelLine: {
+                  show: false
+                },
+                data: [
+                  { value: response.empate, name: 'Empate' },
+                  { value: response.equipo1, name: 'Equipo 1' },
+                  { value: response.equipo2, name: 'Equipo 2' }
+                ]
+              }
+            ]
+          };
 
+          chartInstance.setOption(option);
 
-    const option = {
-      tooltip: {
-        trigger: 'item'
-      },
-      legend: {
-        top: '5%',
-        left: 'center'
-      },
-      series: [
-        {
-          name: 'Access From',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          center: ['50%', '70%'],
-          // Ajustar el ángulo de inicio y fin
-          startAngle: 180,
-          endAngle: 360,
-          data: statiticData
-            
-          
+          return () => {
+            chartInstance.dispose();
+          };
         }
-      ]
+      }
     };
 
-    // Establecer la opción del gráfico
-    myChart.setOption(option);
-
-    // Limpieza del gráfico cuando el componente se desmonte
-    return () => {
-      myChart.dispose();
-    };
-  }, []);
+    fetchData();
+  }, [dispatch, selectedPartido]);
 
   return (
     <div ref={chartRef} style={{ width: '100%', height: '400px' }}></div>

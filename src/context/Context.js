@@ -10,6 +10,7 @@ export const initialState = {
   futurePartidoData: null,
   prediccionData: null,
   selectedPartido: null,
+  statisticData: null
 };
 
 export const accionGetCarreraData = (carrera) => {
@@ -74,6 +75,20 @@ export const accionSetSelectedPartido = (partido) => {
     payload: partido,
   };
 };
+
+export const accionGetStatisticData = (statistic) => {
+  return {
+    type: 'GET_STATISTIC_DATA',
+    payload: statistic,
+  };
+}
+
+export const accionUserLogout = () => {
+  return {
+    type: 'USER_LOGOUT',
+    payload: null,
+  };
+}
 
 
 const reducer = (state, action) => {
