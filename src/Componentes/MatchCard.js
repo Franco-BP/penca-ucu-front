@@ -1,8 +1,8 @@
-import React, { useContext} from 'react';
+import React, { useContext } from 'react';
 import { Card, CardActionArea, CardMedia, Box, Typography, Button } from '@mui/material';
 import FormatDate from '../utils/FormatDate';
 import { useNavigate } from 'react-router-dom';
-import { PencaUCUContext } from '../context/context';
+import { PencaUCUContext } from '../context/Context';
 
 
 const MatchCard = ({ partido }) => {
@@ -43,9 +43,9 @@ const MatchCard = ({ partido }) => {
             src={team1Flag}
             alt={team1.nombre}
           />
-          <Typography sx={{ marginY: '0.5rem'}}>{team1.nombre}</Typography>
+          <Typography sx={{ marginY: '0.5rem' }}>{team1.nombre}</Typography>
         </Box>
-        <Button variant="contained" sx={{ backgroundColor: '#1C285E', color: 'white', borderRadius: '1rem'}}>Ingresar</Button>
+        <Button variant="contained" sx={{ backgroundColor: '#1C285E', color: 'white', borderRadius: '1rem' }}>Ingresar</Button>
         <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center' }}>
           <CardMedia
             sx={{ width: '5rem', height: '5rem' }}

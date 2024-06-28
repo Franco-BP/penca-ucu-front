@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { PencaUCUContext, accionGetPartidoData } from '../context/context';
+import { PencaUCUContext, accionGetPartidoData } from '../context/Context';
 import { getWithResponseManage } from '../services/PencaUCUservices';
 import FormatDate from '../utils/FormatDate';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -103,11 +103,11 @@ export default function Results() {
                 renderCell: (params) => (
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
                         <span>{params.row.team1.nombre}</span>
-                        <img src={require(`../assets/Banderas/${params.row.team1.imgBandera}`)} alt={params.row.team1.nombre} style={{ width: 30, height: 30 }} />
+                        <img src={require(`../assets/banderas/${params.row.team1.imgBandera}`)} alt={params.row.team1.nombre} style={{ width: 30, height: 30 }} />
                         <span>{params.row.team1.resultado}</span>
                         <span>vs</span>
                         <span>{params.row.team2.resultado}</span>
-                        <img src={require(`../assets/Banderas/${params.row.team2.imgBandera}`)} alt={params.row.team2.nombre} style={{ width: 30, height: 30 }} />
+                        <img src={require(`../assets/banderas/${params.row.team2.imgBandera}`)} alt={params.row.team2.nombre} style={{ width: 30, height: 30 }} />
                         <span>{params.row.team2.nombre}</span>
                     </div>
                 ),

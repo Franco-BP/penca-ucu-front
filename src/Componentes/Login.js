@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { postWithResponseManage } from '../services/PencaUCUservices';
-import { accionAddUsuario, PencaUCUContext } from '../context/context';
+import { accionAddUsuario, PencaUCUContext } from '../context/Context';
 import { useNavigate } from 'react-router-dom';
 
 export default function FormPropsTextFields() {

@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../Layout";
 import { Box, Grid, Typography } from "@mui/material";
-import { PencaUCUContext } from "../../../context/context";
+import { PencaUCUContext } from "../../../context/Context";
 import TeamCRUD from "./TeamCRUD";
 import MatchCRUD from "./MatchCRUD";
 
