@@ -8,7 +8,7 @@ import RegisterScreen from './Componentes/screens/RegisterScreen.js';
 import LoginScreen from './Componentes/screens/LoginScreen.js';
 import AdminScreen from './Componentes/screens/admin/AdminScreen.js';
 import PredictionScreen from './Componentes/screens/PredictionScreen.js';
-
+import ProfileScreen from './Componentes/screens/ProfileScreen.js';
 
 function App() {
   return (
@@ -22,6 +22,7 @@ function App() {
           <Route path='registrarse' element={<RegisterScreen />} />
           <Route path='iniciar' element={<LoginScreen />} />
           <Route path='prediccion' element={<PredictionScreen/>}/>
+          <Route path='perfil' element={<ProfileScreen/>}/>
         </Routes>
       </ProviderPencaUCUContext>
 

@@ -67,7 +67,7 @@ const TopBar = () => {
   const { data } = useContext(PencaUCUContext);
   const usuario = data.usuarioData;
 
-  const navItems = ['Prediccion', 'Reglas de juego'];
+  const navItems = ['Reglas de juego'];
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -121,9 +121,6 @@ const TopBar = () => {
         >
           <MenuItem onClick={handleCloseUserMenu} component="a" href="/perfil">
             Perfil
-          </MenuItem>
-          <MenuItem onClick={handleCloseUserMenu} component="a" href="/cuenta">
-            Cuenta
           </MenuItem>
           <MenuItem onClick={handleCloseUserMenu} component="a" href="/cerrarsesion">
             Cerrar sesión
