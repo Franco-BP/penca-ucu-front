@@ -11,7 +11,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import LogoPenca from '../assets/PencaUCU.png';
 import ImagenAvatar from '../assets/78000335.png';
 import { Button } from '@mui/material';
-import { PencaUCUContext, accionUserLogout } from '../context/context';
+import { PencaUCUContext, accionUserLogout } from '../context/Context';
 import { useNavigate } from 'react-router-dom';
 
 const CustomAppBar = styled(AppBar)({
@@ -66,9 +66,7 @@ const TopBar = () => {
 
   const { data, dispatch } = useContext(PencaUCUContext);
   const usuario = data.userData;
-
-  console.log(usuario);
-  
+    
   const navItems = ['Resultados', 'Reglas de juego'];
 
   const theme = useTheme();

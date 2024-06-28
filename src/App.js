@@ -1,6 +1,6 @@
 
 import './App.css';
-import { ProviderPencaUCUContext } from './context/context.js';
+import { ProviderPencaUCUContext } from './context/Context.js';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import RulesScreen from './Componentes/screens/RulesScreen.js';
 import HomeScreen from './Componentes/screens/HomeScreen.js';
