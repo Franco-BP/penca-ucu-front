@@ -50,20 +50,9 @@ const AdminScreen = () => {
 
   const navigate = useNavigate();
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   postWithResponseManage('/usuario/login', loginDetails)
-  //     .then((response) => {
-  //       dispatch(accionAddUser(response))
-  //       if (response.idUsuario) {
-  //         navigate('/home');
-  //       }
-  //     })
-  // };
-
   useEffect(() => {
     if (usuario.esAdministrador != true) {
-      navigate('/home')
+      navigate('/')
     }
   }, []);
 
