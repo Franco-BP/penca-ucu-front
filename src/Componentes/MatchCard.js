@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Card, CardActionArea, CardMedia, Box, Typography, Button } from '@mui/material';
 import FormatDate from '../utils/FormatDate';
 import { useNavigate } from 'react-router-dom';
+import { PencaUCUContext } from '../context/Context';
 
 
 const MatchCard = ({ partido }) => {
+  const { data, dispatch } = useContext(PencaUCUContext);
   const navigate = useNavigate();
   if (!partido || !partido.equipos || partido.equipos.length < 2) return null; // si no hay partidos no los muestra
 
-  
+  console.log(data.usuarioData);
 
   const handleIngresarClick = () => {
-
-    navigate(`/prediccion`); // Navega a la página de predicción con el ID del partido
-  };
+    if (data.usuarioData === null) {
+      return alert("Debe loguearse para poder ingresar a la penca");
+    }
+    else {
+      navigate('/prediccion');
+    }
+  }
 
   const team1 = partido.equipos[0].equipo;
 
@@ -37,9 +43,9 @@ const MatchCard = ({ partido }) => {
             src={team1Flag}
             alt={team1.nombre}
           />
-          <Typography sx={{ marginY: '0.5rem'}}>{team1.nombre}</Typography>
+          <Typography sx={{ marginY: '0.5rem' }}>{team1.nombre}</Typography>
         </Box>
-        <Button variant="contained" sx={{ backgroundColor: '#1C285E', color: 'white', borderRadius: '1rem'}}>Ingresar</Button>
+        <Button variant="contained" sx={{ backgroundColor: '#1C285E', color: 'white', borderRadius: '1rem' }}>Ingresar</Button>
         <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center' }}>
           <CardMedia
             sx={{ width: '5rem', height: '5rem' }}

@@ -12,7 +12,19 @@ const MatchCarousel = () => {
   useEffect(() => {
     getWithResponseManage('/partido/getAll')
       .then((response) => {
-        dispatch(accionGetPartidoData(response));
+        const now = new Date();
+        now.setHours(now.getHours() - 1);
+
+        const futureMatches = response.filter(partido => new Date(partido.fecha) > now);
+        const groupMatches = (matches, groupSize) => {
+          const matchGroups = [];
+          for (let i = 0; i < matches.length; i += groupSize) {
+            matchGroups.push(matches.slice(i, i + groupSize));
+          }
+          return matchGroups;
+        };
+
+        setGroupedMatches(groupMatches(futureMatches, 3));
       })
       .catch(error => console.log(error));
   }, [dispatch]);
@@ -20,21 +32,6 @@ const MatchCarousel = () => {
   const handleSelectPartido = (partido) => {
     dispatch(accionSetSelectedPartido(partido));
   };
-
-
-  useEffect(() => {
-    if (data.partidoData) {
-      const groupMatches = (matches, groupSize) => {
-        const matchGroups = [];
-        for (let i = 0; i < matches.length; i += groupSize) {
-          matchGroups.push(matches.slice(i, i + groupSize));
-        }
-        return matchGroups;
-      };
-
-      setGroupedMatches(groupMatches(data.partidoData, 3));
-    }
-  }, [data.partidoData]);
 
   return (
     <Box sx={{ width: '100%' }}>
