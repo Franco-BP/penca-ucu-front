@@ -24,22 +24,23 @@ const HomeScreen = () => {
           Ranking
         </Typography>
       </Grid>
-      
+
       <Grid container direction="row" justifyContent="flex-start" alignItems="center">
         <Grid sx={{ flex: 1, marginTop: '1', marginLeft: '2.4rem' }}>
           <UserRanking />
         </Grid>
         <Grid>
-          <div  sx={{  borderRadius: '15px' }}>
+          <div sx={{ borderRadius: '15px' }}>
             <CustomSnackbarContent message="Copa america 2024" />
           </div>
-          <Award/>
+          <Award />
         </Grid>
       </Grid>
-      
+
       <Box sx={{ flex: 1, marginTop: '1rem' }}>
         <MatchCarousel />
       </Box>
+
     </Layout>
   )
 }
