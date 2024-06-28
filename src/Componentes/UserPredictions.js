@@ -1,9 +1,8 @@
-
-import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getWithResponseManage } from "../services/PencaUCUservices.js";
+import { PencaUCUContext } from '../context/context.js';
 
 const theme = createTheme({
     components: {
@@ -37,20 +36,24 @@ const columns = [
     { field: 'fecha', headerName: 'Fecha', width: 180, headerAlign: 'center', align: 'center' }
 ];
 
-const UserPredictions = ({ userId }) => {
+const UserPredictions = ({  }) => {
+    const {data, dispatch} = useContext(PencaUCUContext);
+
     const [rows, setRows] = useState([]);
 
+    const userId = data.usuarioData?.idUsuario;
+
     useEffect(() => {
-       // if (!userId) {
-        
-       //console.error('userId is undefined');
-         //   return;
-        //}
+        console.log(data.usuarioData);
+        if (!userId) {
+            console.error('userId is undefined');
+            return;
+        }   
 
         const fetchData = async () => {
             try {
                 console.log('Fetching data for user ID:', userId);
-                const predictionDataResponse = await getWithResponseManage(`/prediccion/getAll/`);
+                const predictionDataResponse = await getWithResponseManage(`/prediccion/getAll`);
 
                 
                 if (Array.isArray(predictionDataResponse)) {

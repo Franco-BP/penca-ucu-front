@@ -119,10 +119,10 @@ const TopBar = () => {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          <MenuItem onClick={handleCloseUserMenu} component="a" href="/perfil">
+          <MenuItem onClick={() => navigate("/perfil")} component="a">
             Perfil
           </MenuItem>
-          <MenuItem onClick={handleCloseUserMenu} component="a" href="/cerrarsesion">
+          <MenuItem onClick={() => navigate("/perfil")} component="a">
             Cerrar sesión
           </MenuItem>
         </Menu>

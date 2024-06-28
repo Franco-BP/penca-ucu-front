@@ -3,7 +3,6 @@ import Layout from '../Layout'
 import { Box, Grid, Typography } from '@mui/material'
 import UserPredictions from '../UserPredictions'
 
-const UserId="1";
 const ProfileScreen = () => {
   return (
     <Layout>
