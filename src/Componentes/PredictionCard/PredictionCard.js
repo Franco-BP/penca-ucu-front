@@ -3,7 +3,7 @@ import { Card, Typography, Button, Box, TextField, CardMedia } from '@mui/materi
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { PencaUCUContext, accionPostPrediccionData } from '../../context/Context';
-import { postWithResponseManage } from "../../services/PencaUCUservices";
+import { getWithResponseManage, postWithResponseManage, putWithResponseManage } from "../../services/PencaUCUservices";
 import CopaAmerica from '../../assets/copaAmerica.png';
 
 const PredictionCard = () => {
@@ -14,6 +14,17 @@ const PredictionCard = () => {
     const equipo2 = selectedPartido?.equipos[1].equipo;
     const equipo1Bandera = require(`../../assets/banderas/${equipo1?.imgBandera}`);
     const equipo2Bandera = require(`../../assets/banderas/${equipo2?.imgBandera}`);
+
+    const responseGetByIdUsuario = getWithResponseManage(`/prediccion/GetAllByIdUsuario/${user.idUsuario}`);
+
+    const prediccionActual = responseGetByIdUsuario.map((prediccionP) => {
+        let prediccion = { idPrediccion: null }
+        if (prediccionP.partido.idPartido === selectedPartido.idPartido) {
+            prediccion = prediccionP;
+        }
+        return prediccion;
+    })
+
 
     const [prediccionE1, setPrediccionE1] = useState(0);
     const [prediccionE2, setPrediccionE2] = useState(0);
@@ -39,13 +50,19 @@ const PredictionCard = () => {
             prediccionEquipo1: prediccionE1,
             prediccionEquipo2: prediccionE2,
             partido: { idPartido: selectedPartido.idPartido },
-            idUsuario: user.idUsuario, // cambiar por usuario logueado
+            idUsuario: user.idUsuario,
             puntos: 0
         };
-        const response = await postWithResponseManage('/prediccion/create', predictionData);
-        dispatch(accionPostPrediccionData(response));
-        alert('Predicción ingresada correctamente');
-    };
+        if (prediccionActual.idPrediccion !== null) {
+            const response = await putWithResponseManage('/prediccion/update', predictionData);
+            dispatch(accionPostPrediccionData(response));
+            alert('Predicción ingresada correctamente');
+        } else {
+            const response = await postWithResponseManage('/prediccion/create', predictionData);
+            dispatch(accionPostPrediccionData(response));
+            alert('Predicción actualizada correctamente');
+        }
+    }
 
     return (
         <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', padding: 2, width: '37rem', border: '2px solid ', borderColor: '#1C285E', borderRadius: '1rem' }}>

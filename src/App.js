@@ -23,7 +23,7 @@ function App() {
           <Route path='administrar' element={<AdminScreen />} />
           <Route path='registrarse' element={<RegisterScreen />} />
           <Route path='iniciar' element={<LoginScreen />} />
-          <Route path='perfil' element={<ProfileScreen/>}/>
+          <Route path='perfil' element={<ProfileScreen />} />
           <Route path='prediccion' element={<PredictionScreen />} />
           <Route path='resultados' element={<ResultsScreen />} />
         </Routes>
