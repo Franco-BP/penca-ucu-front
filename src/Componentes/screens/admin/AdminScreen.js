@@ -45,36 +45,15 @@ const AdminScreen = () => {
     setTabValue(newTabValue);
   };
 
-  const { data, dispatch } = useContext(PencaUCUContext);
+  const { data } = useContext(PencaUCUContext);
   const usuario = data.usuarioData;
-  const subtitles = {
-    textAlign: "left",
-    marginTop: "3rem",
-    marginLeft: "5rem",
-    color: "#1C285E",
-    fontFamily: "revert",
-  };
 
   const navigate = useNavigate();
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   postWithResponseManage('/usuario/login', loginDetails)
-  //     .then((response) => {
-  //       dispatch(accionAddUser(response))
-  //       if (response.idUsuario) {
-  //         navigate('/home');
-  //       }
-  //     })
-  // };
-
   useEffect(() => {
-    //
-    // Commented for testing reasons
-    //
-    // if (usuario.esAdministrador != true) {
-    //   navigate('/home')
-    // }
+    if (usuario.esAdministrador != true) {
+      navigate('/')
+    }
   }, []);
 
   return (

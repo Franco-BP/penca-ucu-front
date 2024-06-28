@@ -1,16 +1,14 @@
 import React, { useContext } from 'react';
-import { Card, CardActionArea, CardMedia, Box, Typography, Button } from '@mui/material';
+import { Card, CardActionArea, CardMedia, Box, Typography } from '@mui/material';
 import FormatDate from '../utils/FormatDate';
 import { useNavigate } from 'react-router-dom';
 import { PencaUCUContext } from '../context/Context';
 
 
 const MatchCard = ({ partido }) => {
-  const { data, dispatch } = useContext(PencaUCUContext);
+  const { data } = useContext(PencaUCUContext);
   const navigate = useNavigate();
   if (!partido || !partido.equipos || partido.equipos.length < 2) return null; // si no hay partidos no los muestra
-
-  console.log(data.usuarioData);
 
   const handleIngresarClick = () => {
     if (data.usuarioData === null) {
@@ -45,7 +43,33 @@ const MatchCard = ({ partido }) => {
           />
           <Typography sx={{ marginY: '0.5rem' }}>{team1.nombre}</Typography>
         </Box>
-        <Button variant="contained" sx={{ backgroundColor: '#1C285E', color: 'white', borderRadius: '1rem' }}>Ingresar</Button>
+        <Box
+          variant="contained"
+          sx={{
+            backgroundColor: '#1C285E',
+            color: 'white',
+            borderRadius: '1rem',
+            padding: '0.5rem 1.5rem',
+            textAlign: 'center',
+            fontWeight: 'bold',
+            fontSize: '1rem',
+            cursor: 'pointer',
+            boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+            transition: 'background-color 0.3s, transform 0.3s, box-shadow 0.3s',
+            '&:hover': {
+              backgroundColor: '#2A3A72',
+              boxShadow: '0px 6px 8px rgba(0, 0, 0, 0.15)',
+              transform: 'translateY(-2px)',
+            },
+            '&:active': {
+              backgroundColor: '#0F1B40',
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+              transform: 'translateY(0)',
+            }
+          }}
+        >
+          Ingresar
+        </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center' }}>
           <CardMedia
             sx={{ width: '5rem', height: '5rem' }}

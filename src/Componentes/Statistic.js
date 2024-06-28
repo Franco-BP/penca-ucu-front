@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext, useState } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import * as echarts from 'echarts/core';
 import { TooltipComponent, LegendComponent } from 'echarts/components';
 import { PieChart } from 'echarts/charts';
@@ -65,9 +65,9 @@ const Statistic = () => {
                   show: false
                 },
                 data: [
-                  { value: response.empate, name: 'Empate' },
-                  { value: response.equipo1, name: 'Equipo 1' },
-                  { value: response.equipo2, name: 'Equipo 2' }
+                  { value: response.empate, name: 'Empate', itemStyle: { color: '#808080' } }, // Gris
+                  { value: response.equipo1, name: 'Equipo 1', itemStyle: { color: '#00BFFF' } }, // Celeste
+                  { value: response.equipo2, name: 'Equipo 2', itemStyle: { color: '#FFD700' } } // Amarillo
                 ]
               }
             ]

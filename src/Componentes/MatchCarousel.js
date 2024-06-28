@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import MatchCard from './MatchCard';
-import { Box, Grid } from '@mui/material';
-import { PencaUCUContext, accionGetPartidoData, accionSetSelectedPartido } from '../context/Context';
+import { Box } from '@mui/material';
+import { PencaUCUContext, accionSetSelectedPartido } from '../context/Context';
 import { getWithResponseManage } from '../services/PencaUCUservices';
 
 const MatchCarousel = () => {
-  const { data, dispatch } = useContext(PencaUCUContext);
+  const { dispatch } = useContext(PencaUCUContext);
   const [groupedMatches, setGroupedMatches] = useState([]);
 
   useEffect(() => {

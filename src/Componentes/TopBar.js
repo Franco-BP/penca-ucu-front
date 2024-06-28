@@ -32,12 +32,6 @@ const LogoImage = styled('img')({
   marginTop: '-200px',
 });
 
-const TitleContainer = styled('div')({
-  flexGrow: 1,
-  display: 'flex',
-  justifyContent: 'space-around',
-});
-
 const CustomAvatar = styled(Avatar)({
   marginLeft: '16px',
   backgroundColor: '#FFFFFF',
@@ -94,7 +88,7 @@ const TopBar = () => {
   return (
     <CustomAppBar position="static" className="CustomAppBar">
       <Toolbar>
-        <LogoButton component="a" href="/home">
+        <LogoButton component="a" onClick={() => navigate('/')}>
           <LogoImage src={LogoPenca} alt="logo" />
         </LogoButton>
         {!isMobile && (
@@ -119,7 +113,7 @@ const TopBar = () => {
         {usuario === undefined || usuario === null ? (
           <>
             <Button color="inherit" onClick={() => navigate('/iniciar')}>Login</Button>
-            <Button color="inherit" onClick={() => navigate('/registrarse')}>Register</Button>
+            <Button color="inherit" onClick={() => navigate('/perfil')}>Register</Button>
           </>
         ) : (
           <IconButton edge="end" color="inherit" onClick={handleOpenUserMenu} sx={{ marginLeft: 'auto' }}>
@@ -142,11 +136,8 @@ const TopBar = () => {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          <MenuItem onClick={handleCloseUserMenu} component="a" href="/perfil">
+          <MenuItem onClick={() => navigate("/perfil")} component="a">
             Perfil
-          </MenuItem>
-          <MenuItem onClick={handleCloseUserMenu} component="a" href="/cuenta">
-            Cuenta
           </MenuItem>
           <MenuItem onClick={logout}>
             Cerrar sesión
