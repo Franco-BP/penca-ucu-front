@@ -16,6 +16,7 @@ const PredictionCard = () => {
 
     const [prediccionE1, setPrediccionE1] = useState(0);
     const [prediccionE2, setPrediccionE2] = useState(0);
+    const usuarioData = data.usuarioData;
 
     const handleIncrement = (which) => {
         if (which === 'teamOne') setPrediccionE1(prev => prev < 99 ? prev + 1 : prev);
@@ -38,12 +39,14 @@ const PredictionCard = () => {
             prediccionEquipo1: prediccionE1,
             prediccionEquipo2: prediccionE2,
             partido: { idPartido: selectedPartido.idPartido },
-            idUsuario: 1, // cambiar por usuario logueado
+            idUsuario: usuarioData.idUsuario, // cambiar por usuario logueado
             puntos: 0
         };
         const response = await postWithResponseManage('/prediccion/create', predictionData);
         dispatch(accionPostPrediccionData(response));
         alert('Predicción ingresada correctamente');
+        setPrediccionE1(0);
+        setPrediccionE2(0);
     };
 
     return (
