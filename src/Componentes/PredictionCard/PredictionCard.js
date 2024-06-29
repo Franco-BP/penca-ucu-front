@@ -44,6 +44,8 @@ const PredictionCard = () => {
         const response = await postWithResponseManage('/prediccion/create', predictionData);
         dispatch(accionPostPrediccionData(response));
         alert('Predicción ingresada correctamente');
+        setPrediccionE1(0);
+        setPrediccionE2(0);
     };
 
     return (
