@@ -2,22 +2,25 @@ import React, { createContext, useReducer } from 'react';
 
 export const PencaUCUContext = createContext();
 
+// const USUARIO_HARDCODED = {
+//     idUsuario: 1,
+//     email: "admin@pencaucu.com",
+//     contrasenia: "$2a$11$FZ9sQz9001/9fqiy98j2kOk4b29NnAUn.2NaNQNBSYf7hSP7MmPva",
+//     nombre: "Administrador",
+//     apellido: "PencaUCU",
+//     avatarPath: "admin.png",
+//     carrera: {
+//         idCarrera: 4,
+//         nombre: "Analista en Informática",
+//         anios: "3"
+//     },
+//     esAdministrador: true
+// };
+
 export const initialState = {
   torneoData: null,
   usuarioData: null,
-  carreraData: null,
-  partidoData: null,
-  futurePartidoData: null,
-  prediccionData: null,
-  selectedPartido: null,
-  statisticData: null
-};
-
-export const accionGetCarreraData = (carrera) => {
-  return {
-    type: 'GET_CARRERA_DATA',
-    payload: carrera,
-  };
+  selectedPartido: null
 };
 
 export const accionAddUsuario = (usuario) => {
@@ -34,41 +37,6 @@ export const accionGetTorneoData = (torneo) => {
   };
 };
 
-export const accionGetPartidoData = (partido) => {
-  return {
-    type: 'GET_PARTIDO_DATA',
-    payload: partido,
-  };
-};
-
-export const accionGetFuturePartidoData = (partido) => {
-  return {
-    type: 'GET_FUTURE_PARTIDO_DATA',
-    payload: partido,
-  };
-}
-
-export const accionGetPrediccionData = (prediccion) => {
-  return {
-    type: 'GET_PREDICCION_DATA',
-    payload: prediccion,
-  };
-}
-
-export const accionGetUsuarioData = (usuario) => {
-  return {
-    type: 'GET_USUARIO_DATA',
-    payload: usuario,
-  };
-};
-
-export const accionPostPrediccionData = (prediccion) => {
-  return {
-    type: 'POST_PREDICCION_DATA',
-    payload: prediccion,
-  };
-};
-
 export const accionSetSelectedPartido = (partido) => {
   return {
     type: 'SET_SELECTED_PARTIDO',
@@ -76,21 +44,12 @@ export const accionSetSelectedPartido = (partido) => {
   };
 };
 
-export const accionGetStatisticData = (statistic) => {
-  return {
-    type: 'GET_STATISTIC_DATA',
-    payload: statistic,
-  };
-}
-
 export const accionUserLogout = () => {
   return {
     type: 'USER_LOGOUT',
     payload: null,
   };
-}
-
-
+};
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -98,18 +57,6 @@ const reducer = (state, action) => {
       return { ...state, torneoData: action.payload };
     case 'ADD_USUARIO':
       return { ...state, usuarioData: action.payload };
-    case 'GET_CARRERA_DATA':
-      return { ...state, carreraData: action.payload };
-    case 'GET_PARTIDO_DATA':
-      return { ...state, partidoData: action.payload };
-    case 'GET_FUTURE_PARTIDO_DATA':
-      return { ...state, futurePartidoData: action.payload };
-    case 'GET_PREDICCION_DATA':
-      return { ...state, prediccionData: action.payload };
-    case 'GET_USUARIO_DATA':
-      return { ...state, usuarioData: action.payload };
-    case 'POST_PREDICCION_DATA':
-      return { ...state, prediccionData: action.payload };
     case 'SET_SELECTED_PARTIDO':
       return { ...state, selectedPartido: action.payload };
     case 'USER_LOGOUT':

@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 
 const CustomAppBar = styled(AppBar)({
   marginTop: '40px',
+  marginBottom: '35px',
   backgroundColor: '#1C285E',
 });
 
@@ -80,7 +81,6 @@ const TopBar = () => {
 
   const logout = () => {
     dispatch(accionUserLogout()); // Cambia el estado de usuario a null
-    console.log('Usuario:', usuario);
     handleCloseUserMenu();
     navigate('/home');
   };
@@ -112,8 +112,8 @@ const TopBar = () => {
 
         {usuario === undefined || usuario === null ? (
           <>
-            <Button color="inherit" onClick={() => navigate('/iniciar')}>Login</Button>
-            <Button color="inherit" onClick={() => navigate('/registrarse')}>Register</Button>
+            <Button color="inherit" onClick={() => navigate('/iniciar')}>Iniciar Sesión</Button>
+            <Button color="inherit" onClick={() => navigate('/registrarse')}>Registrarse</Button>
           </>
         ) : (
           <IconButton edge="end" color="inherit" onClick={handleOpenUserMenu} sx={{ marginLeft: 'auto' }}>

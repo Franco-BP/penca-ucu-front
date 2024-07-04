@@ -8,10 +8,10 @@ const ResultsScreen = () => {
         <Layout>
             <Grid item xs={12} sm={12} md={12}>
                 <Typography variant="h4" component="h2" sx={{ textAlign: 'left', marginBottom: '0.5rem', marginTop: '1.5rem', marginLeft: '5rem', color: '#1C285E', fontFamily: 'revert', }}>
-                    Resultados
+                    <b>Resultados</b>
                 </Typography>
             </Grid>
-            <Box sx={{ flex: 1, marginTop: '1.5rem' }}>
+            <Box sx={{ display: 'flex', flex: 1, marginTop: '1.5rem', justifyContent: 'center' }}>
                 <Results />
             </Box>
         </Layout>

@@ -49,11 +49,11 @@ const columns = [
                         alt={params.row.partido.equipos[0].equipo.nombre}
                     />
                     <Typography>{
-                        params.row.partido.equipos[0].resultado ? params.row.partido.equipos[0].resultado : "X"
+                        params.row.partido.equipos[0].resultado != null ? params.row.partido.equipos[0].resultado : ""
                     }</Typography>
                     <Typography> - </Typography>
                     <Typography>{
-                        params.row.partido.equipos[1].resultado ? params.row.partido.equipos[1].resultado : "X"
+                        params.row.partido.equipos[1].resultado != null ? params.row.partido.equipos[1].resultado : ""
                     }</Typography>
                     <CardMedia
                         sx={{ width: '2rem', height: '2rem' }}
@@ -77,11 +77,11 @@ const columns = [
                         alt={params.row.partido.equipos[0].equipo.nombre}
                     />
                     <Typography>{
-                        params.row.prediccion.prediccionEquipo1 ? params.row.prediccion.prediccionEquipo1 : "X"
+                        params.row.prediccion.prediccionEquipo1 != null ? params.row.prediccion.prediccionEquipo1 : ""
                     }</Typography>
                     <Typography> - </Typography>
                     <Typography>{
-                        params.row.prediccion.prediccionEquipo2 ? params.row.prediccion.prediccionEquipo2 : "X"
+                        params.row.prediccion.prediccionEquipo2 != null ? params.row.prediccion.prediccionEquipo2 : ""
                     }</Typography>
                     <CardMedia
                         sx={{ width: '2rem', height: '2rem' }}
@@ -133,7 +133,7 @@ const UserPredictions = () => {
         };
 
         fetchData();
-    }, []);
+    }, [userId]);
 
     return (
         <ThemeProvider theme={theme}>

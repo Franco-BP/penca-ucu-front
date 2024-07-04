@@ -95,15 +95,19 @@ const MatchCRUD = () => {
   const handleUpdate = () => {
     if (matchUpdate && team1Update && team2Update && team1Update.resultado && team2Update.resultado) {
       let matchDTO = {...matchUpdate, equipos: [team1Update, team2Update]};
-      putWithResponseManage('/partido/update', matchDTO)
-      .then((response) => {
-        if (response.idPartido) {
-          alert("Actualización exitosa del resultado.");
-          checkResultado(matchDTO);
-        } else {
-          alert("Error desconocido en la actualización. Pruebe con reescribir los valores.");
-        }
-      })
+      if ((new Date(matchDTO.fecha)).getTime() < Date.now()) {
+        putWithResponseManage('/partido/update', matchDTO)
+        .then((response) => {
+          if (response.idPartido) {
+            alert("Actualización exitosa del resultado.");
+            checkResultado(matchDTO);
+          } else {
+            alert("Error desconocido en la actualización. Pruebe con reescribir los valores.");
+          }
+        }); 
+      } else {
+        alert("El partido aún no finalizó.");
+      }
     } else {
       alert("Valores faltantes para la actualización.");
     }

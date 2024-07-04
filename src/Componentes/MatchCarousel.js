@@ -23,11 +23,10 @@ const MatchCarousel = () => {
           }
           return matchGroups;
         };
-
         setGroupedMatches(groupMatches(futureMatches, 3));
       })
       .catch(error => console.log(error));
-  }, [dispatch]);
+  }, []);
 
   const handleSelectPartido = (partido) => {
     dispatch(accionSetSelectedPartido(partido));

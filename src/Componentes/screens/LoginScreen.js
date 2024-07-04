@@ -8,7 +8,7 @@ const LoginScreen = () => {
     <Layout>
       <Grid item xs={12} sm={12} md={12}>
         <Typography variant="h4" component="h2" sx={{ textAlign: 'left', marginBottom:'0.5rem',marginTop:'1.5rem',marginLeft:'5rem', color:'#1C285E',fontFamily: 'revert',}}>
-          Inicio de sesion
+          <b>Inicio de sesion</b>
         </Typography>
       </Grid>
       <Box sx={{ flex: 1, marginTop: '1.5rem' }}>

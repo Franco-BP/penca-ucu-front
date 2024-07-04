@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { getWithResponseManage } from "../services/PencaUCUservices.js";
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { PencaUCUContext, accionGetPrediccionData } from '../context/Context.js';
 
 const theme = createTheme({
     components: {
@@ -39,7 +38,6 @@ const columns = [
 ];
 
 const UserRanking = () => {
-    const { dispatch } = useContext(PencaUCUContext);
     const [rows, setRows] = useState([]);
 
     useEffect(() => {
@@ -48,7 +46,7 @@ const UserRanking = () => {
                 const userDataResponse = await getWithResponseManage('/usuario/getAll');
                 const predictionDataResponse = await getWithResponseManage('/prediccion/getAll');
 
-                const userData = userDataResponse;
+                const userData = userDataResponse?.filter(element => element.esAdministrador !== true);
                 const predictionData = predictionDataResponse;
 
                 const rankingData = userData.map(user => ({
@@ -61,15 +59,13 @@ const UserRanking = () => {
 
                 rankingData.sort((a, b) => b.pts - a.pts).forEach((user, index) => user.pos = index + 1); //ordenar por puntos y asignarle la pos
                 setRows(rankingData.sort((a, b) => b.pts - a.pts));
-
-                dispatch(accionGetPrediccionData(rankingData));
             } catch (error) {
                 console.error('Failed to fetch data:', error);
             }
 
         };
         fetchData();
-    }, [dispatch]);
+    }, []);
 
     return (
         <ThemeProvider theme={theme}>

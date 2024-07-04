@@ -51,10 +51,10 @@ const AdminScreen = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (usuario.esAdministrador != true) {
+    if (usuario.esAdministrador !== true) {
       navigate('/')
     }
-  }, []);
+  }, [usuario, navigate]);
 
   return (
     <Layout>
@@ -71,11 +71,11 @@ const AdminScreen = () => {
             fontFamily: "revert",
           }}
         >
-          Administrar datos
+          <b>Administrar datos</b>
         </Typography>
       </Grid>
 
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "90%", justifyContent:"center", marginLeft:'5rem' }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={tabValue}

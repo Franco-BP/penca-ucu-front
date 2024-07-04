@@ -41,7 +41,9 @@ const MatchCard = ({ partido }) => {
             src={team1Flag}
             alt={team1.nombre}
           />
-          <Typography sx={{ marginY: '0.5rem' }}>{team1.nombre}</Typography>
+          <Typography sx={{ marginY: '0.5rem' }}>
+            {team1.nombre}
+          </Typography>
         </Box>
         <Box
           variant="contained"
@@ -77,11 +79,15 @@ const MatchCard = ({ partido }) => {
             src={team2Flag}
             alt={team2.nombre}
           />
-          <Typography sx={{ marginY: '0.5rem' }}>{team2.nombre}</Typography>
+          <Typography sx={{ marginY: '0.5rem' }}>
+            {team2.nombre}
+          </Typography>
         </Box>
       </CardActionArea>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-        <Typography align='center'>{FormatDate(partido.fecha)}</Typography>
+        <Typography align='center'>
+          <b>{FormatDate(partido.fecha)}</b>
+        </Typography>
       </Box>
     </Card>
   );

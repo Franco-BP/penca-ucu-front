@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { PencaUCUContext, accionGetPartidoData } from '../context/Context';
 import { getWithResponseManage } from '../services/PencaUCUservices';
 import FormatDate from '../utils/FormatDate';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { Box } from '@mui/material';
 
 const theme = createTheme({
     components: {
@@ -31,6 +30,8 @@ const theme = createTheme({
     },
 });
 
+const partidoBoxStyle = { display:'flex', flexDirection:'row', alignContent:'center', alignItems:'center' };
+
 const columns = [
     { field: 'fechaYHora', headerName: 'Fecha y Hora', flex: 1, headerAlign: 'center', align: 'center' },
     {
@@ -41,24 +42,28 @@ const columns = [
         flex: 6,
         renderCell: (params) => {
             return (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                    <span>{params.row.team1.nombre}</span>
-                    <img src={require(`../assets/banderas/${params.row.team1.imgBandera}`)} alt={params.row.team1.nombre} style={{ width: 45, height: 45 }} />
-                    <span>{params.row.team1.resultado}</span>
-                    <span>vs</span>
-                    <span>{params.row.team2.resultado}</span>
-                    <img src={require(`../assets/banderas/${params.row.team2.imgBandera}`)} alt={params.row.team2.nombre} style={{ width: 45, height: 45 }} />
-                    <span>{params.row.team2.nombre}</span>
-                </div>
+                <Box sx={{ ...partidoBoxStyle }} gap={1}>
+                    <Box sx={{ ...partidoBoxStyle, justifyContent: 'flex-end', width: '49%' }} gap={2}>
+                        <span>{params.row.team1.nombre}</span>
+                        <img src={require(`../assets/banderas/${params.row.team1.imgBandera}`)} alt={params.row.team1.nombre} style={{ width: 30, height: 30 }} />
+                        <span>{params.row.team1.resultado}</span>
+                    </Box>
+                    <Box sx={{ ...partidoBoxStyle, justifyContent: 'center', width: '2%' }} >
+                        <span>-</span>
+                    </Box>
+                    <Box sx={{ ...partidoBoxStyle, justifyContent: 'flex-start', width: '49%' }} gap={2}>
+                        <span>{params.row.team2.resultado}</span>
+                        <img src={require(`../assets/banderas/${params.row.team2.imgBandera}`)} alt={params.row.team2.nombre} style={{ width: 30, height: 30 }} />
+                        <span>{params.row.team2.nombre}</span>
+                    </Box>
+                </Box>
             );
         },
     },
 ];
 
 export default function Results() {
-    const { data, dispatch } = useContext(PencaUCUContext);
     const [rows, setRows] = useState([]);
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     useEffect(() => {
         const fetchData = async () => {
@@ -85,42 +90,17 @@ export default function Results() {
             }).filter(partido => partido !== null);
 
             setRows(partidoData);
-            dispatch(accionGetPartidoData(partidoData));
         };
 
         fetchData();
-    }, [dispatch]);
-
-    const adjustedColumns = isMobile
-        ? [
-            { field: 'fechaYHora', headerName: 'Fecha y Hora', flex: 1, headerAlign: 'center', align: 'center' },
-            {
-                field: 'partido',
-                headerName: 'Partido',
-                headerAlign: 'center',
-                align: 'center',
-                flex: 2,
-                renderCell: (params) => (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
-                        <span>{params.row.team1.nombre}</span>
-                        <img src={require(`../assets/banderas/${params.row.team1.imgBandera}`)} alt={params.row.team1.nombre} style={{ width: 30, height: 30 }} />
-                        <span>{params.row.team1.resultado}</span>
-                        <span>vs</span>
-                        <span>{params.row.team2.resultado}</span>
-                        <img src={require(`../assets/banderas/${params.row.team2.imgBandera}`)} alt={params.row.team2.nombre} style={{ width: 30, height: 30 }} />
-                        <span>{params.row.team2.nombre}</span>
-                    </div>
-                ),
-            },
-        ]
-        : columns;
+    }, []);
 
     return (
         <ThemeProvider theme={theme}>
-            <div style={{ height: 500, width: '100%' }}>
+            <div style={{ height: 500, width: '90%'}}>
                 <DataGrid
                     rows={rows}
-                    columns={adjustedColumns}
+                    columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
                     disableSelectionOnClick

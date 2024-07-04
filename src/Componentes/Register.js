@@ -15,8 +15,8 @@ export default function FormPropsTextFields() {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const { data, dispatch } = useContext(PencaUCUContext);
-    const carreraData = data.carreraData;
+    const { dispatch } = useContext(PencaUCUContext);
+    const [carreraData, setCarreraData] = useState([]);
     const [torneosData, setTorneosData] = useState([]);
     const [equiposData, setEquiposData] = useState([]);
 
@@ -24,7 +24,7 @@ export default function FormPropsTextFields() {
       getWithResponseManage('/carrera/getAll')
           .then((response) => {
             if(response[0]){
-                dispatch(accionGetCarreraData(response));
+                setCarreraData(response);
                 if(response[0].idCarrera){
                     setIdCarrera(1);
                 }
